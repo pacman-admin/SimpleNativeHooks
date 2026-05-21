@@ -5,8 +5,6 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.simplenativehooks.utilities.FileUtility;
-
 public class BootStrapResources {
 
 	private static final Set<AbstractBootstrapResource> BOOTSTRAP_RESOURCES;
@@ -26,10 +24,6 @@ public class BootStrapResources {
 		for (AbstractBootstrapResource resource : BOOTSTRAP_RESOURCES) {
 			resource.extractResources();
 		}
-	}
-
-	protected static String getFile(String path) {
-		return FileUtility.readFromStream(BootStrapResources.class.getResourceAsStream(path)).toString();
 	}
 
 	private BootStrapResources() {}

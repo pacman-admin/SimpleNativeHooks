@@ -19,7 +19,7 @@ public class Example {
 			System.exit(2);
 		}
 		/* Initializing global hooks */
-		NativeHookInitializer.of().start();
+		new NativeHookInitializer().start();
 
 		/* Set up callbacks */
 		NativeKeyHook key = NativeKeyHook.of();
@@ -67,6 +67,6 @@ public class Example {
 		Thread.sleep(5000);
 
 		/* Clean up */
-		NativeHookInitializer.of().stop();
+		new NativeHookInitializer().stop();
 	}
 }
