@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SimpleNativeHooks:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SimpleNativeHooks_jar</output-path>
+    <root id="archive" name="SimpleNativeHooks.jar">
+      <element id="module-output" name="SimpleNativeHooks" />
+    </root>
+  </artifact>
+</component>
