@@ -10,9 +10,9 @@ public abstract class AbstractGlobalMouseListener implements GlobalListener {
 	protected Function<NativeMouseEvent, Boolean> mouseMoved;
 
 	protected AbstractGlobalMouseListener() {
-		mousePressed = Function.<NativeMouseEvent>trueFunction();
-		mouseReleased = Function.<NativeMouseEvent>trueFunction();
-		mouseMoved = Function.<NativeMouseEvent>trueFunction();
+		mousePressed = Function.trueFunction();
+		mouseReleased = Function.trueFunction();
+		mouseMoved = Function.trueFunction();
 	}
 
 	public final void setMousePressed(Function<NativeMouseEvent, Boolean> mousePressed) {

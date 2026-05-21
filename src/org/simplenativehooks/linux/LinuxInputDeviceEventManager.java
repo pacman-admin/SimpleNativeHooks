@@ -8,7 +8,7 @@ public class LinuxInputDeviceEventManager {
 
 	private static final Logger LOGGER = Logger.getLogger(LinuxInputDeviceEventManager.class.getName());
 
-	private Map<String, LinuxDeviceEventProcessor> processors;
+	private final Map<String, LinuxDeviceEventProcessor> processors;
 
 	public LinuxInputDeviceEventManager() {
 		processors = new HashMap<>();

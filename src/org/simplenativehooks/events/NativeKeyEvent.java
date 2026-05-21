@@ -7,14 +7,14 @@ public class NativeKeyEvent {
 	public enum Modifier {
 		KEY_MODIFIER_UNKNOWN, // Unknown is equal to both left and right.
 		KEY_MODIFIER_LEFT,
-		KEY_MODIFIER_RIGHT;
-	}
+		KEY_MODIFIER_RIGHT
+    }
 
-	private int key; // Values from java.awt.KeyEvent;
-	private Modifier modifier;
+	private final int key; // Values from java.awt.KeyEvent;
+	private final Modifier modifier;
 
-	private boolean pressed; // Press or release.
-	private LocalDateTime invokedTime;
+	private final boolean pressed; // Press or release.
+	private final LocalDateTime invokedTime;
 
 	private NativeKeyEvent(int key, Modifier modifier, boolean pressed) {
 		this.key = key;

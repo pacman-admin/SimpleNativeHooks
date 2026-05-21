@@ -16,9 +16,9 @@ public class GlobalLinuxEventOchestrator {
 
 	private boolean stop = false;
 	private Thread deviceScanner;
-	private LinuxInputDeviceEventManager deviceManager;
+	private final LinuxInputDeviceEventManager deviceManager;
 
-	private Set<String> allDevices;
+	private final Set<String> allDevices;
 	private Set<String> deviceFiles;
 
 	private GlobalLinuxEventOchestrator() {

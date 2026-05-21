@@ -11,8 +11,9 @@ import org.simplenativehooks.events.NativeMouseEvent.State;
 
 public class OSXNativeMouseEvent extends NativeHookMouseEvent {
 
-	private int code;
-	private int x, y;
+	private final int code;
+	private final int x;
+    private final int y;
 
 	private OSXNativeMouseEvent(int code, int x, int y) {
 		this.code = code;

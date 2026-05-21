@@ -26,9 +26,9 @@ public class ProcBusInputDevicesInfo {
 	private static final int EV_LED = 0x11;
 	private static final int EV_REP = 0x14;
 
-	private String name;
-	private String handler;
-	private String ev;
+	private final String name;
+	private final String handler;
+	private final String ev;
 
 	public ProcBusInputDevicesInfo(String name, String handler, String ev) {
 		this.name = name;
@@ -126,8 +126,8 @@ public class ProcBusInputDevicesInfo {
 		READ_NAME,
 		READ_HANDLER,
 		READ_EV,
-		WAIT_END;
-	}
+		WAIT_END
+    }
 
 	/**
 	 * Read the device file and collect information about all devices.

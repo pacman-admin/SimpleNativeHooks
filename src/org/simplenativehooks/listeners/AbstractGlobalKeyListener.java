@@ -8,8 +8,8 @@ public abstract class AbstractGlobalKeyListener implements GlobalListener {
 	protected Function<NativeKeyEvent, Boolean> keyReleased;
 
 	protected AbstractGlobalKeyListener() {
-		keyPressed = Function.<NativeKeyEvent>trueFunction();
-		keyReleased = Function.<NativeKeyEvent>trueFunction();
+		keyPressed = Function.trueFunction();
+		keyReleased = Function.trueFunction();
 	}
 
 	public final void setKeyPressed(Function<NativeKeyEvent, Boolean> keyPressed) {

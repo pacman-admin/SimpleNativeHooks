@@ -32,11 +32,11 @@ public class NativeHookInitializer {
 	}
 
 	public static class Config {
-		private boolean useJnaForWindows;
+		private final boolean useJnaForWindows;
 		// Instead of using Windows low level hook position, use Java AWT tools to fetch mouse
 		// position. This because Windows reported position is not reliable when scaling is enabled.
 		// Note: This only works when useJnaForWindows is enabled.
-		private boolean useJavaAwtToReportMousePositionOnWindows;
+		private final boolean useJavaAwtToReportMousePositionOnWindows;
 
 		private Config(boolean useJnaForWindows, boolean useJavaAwtToReportMousePositionOnWindows) {
 			this.useJnaForWindows = useJnaForWindows;

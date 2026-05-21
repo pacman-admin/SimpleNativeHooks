@@ -17,8 +17,8 @@ class LinuxDeviceEventProcessor extends AbstractNativeHookEventProcessor {
 	//E.g.: 'Ts:1544327169,Tus:649369,T:1,C:46,V:1'
 	private static final Pattern EVENT_PATTERN = Pattern.compile("^Ts:([0-9]+?),Tus:([0-9]+?),T:([0-9]+?),C:([0-9]+?),V:(-?[0-9]+)$");
 
-	private LinuxDeviceType deviceType;
-	private String deviceFile;
+	private final LinuxDeviceType deviceType;
+	private final String deviceFile;
 	private Timestamp lastTime;
 
 	protected LinuxDeviceEventProcessor(LinuxDeviceType deviceType, String deviceFile) {
@@ -125,10 +125,7 @@ class LinuxDeviceEventProcessor extends AbstractNativeHookEventProcessor {
 			if (nanoSecond != other.nanoSecond) {
 				return false;
 			}
-			if (second != other.second) {
-				return false;
-			}
-			return true;
-		}
+            return second == other.second;
+        }
 	}
 }

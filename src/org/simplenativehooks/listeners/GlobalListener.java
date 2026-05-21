@@ -1,7 +1,7 @@
 package org.simplenativehooks.listeners;
 
 public interface GlobalListener {
-	public boolean startListening();
+	boolean startListening();
 
-	public boolean stopListening();
+	boolean stopListening();
 }

@@ -14,6 +14,7 @@ import java.io.Writer;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -306,7 +307,7 @@ public class FileUtility {
 
 		try {
 			fr = new FileInputStream(file);
-			InputStreamReader char_input = new InputStreamReader(fr, Charset.forName("UTF-8").newDecoder());
+			InputStreamReader char_input = new InputStreamReader(fr, StandardCharsets.UTF_8.newDecoder());
 			BufferedReader br = new BufferedReader(char_input);
 
 			while (true) {
@@ -338,13 +339,13 @@ public class FileUtility {
 	 * @return StringBuffer the read result.
 	 */
 	public static StringBuffer readFromFile(File file) {
-		StringBuffer output = new StringBuffer("");
+		StringBuffer output = new StringBuffer();
 		FileInputStream fr = null;
 
 		try {
 			fr = new FileInputStream(file);
 
-			InputStreamReader char_input = new InputStreamReader(fr, Charset.forName("UTF-8").newDecoder());
+			InputStreamReader char_input = new InputStreamReader(fr, StandardCharsets.UTF_8.newDecoder());
 
 			BufferedReader br = new BufferedReader(char_input);
 
@@ -393,7 +394,7 @@ public class FileUtility {
 			return output;
 		}
 
-		InputStreamReader char_input = new InputStreamReader(inputStream, Charset.forName("UTF-8").newDecoder());
+		InputStreamReader char_input = new InputStreamReader(inputStream, StandardCharsets.UTF_8.newDecoder());
 		BufferedReader br = new BufferedReader(char_input);
 		try {
 			while (true) {
@@ -449,7 +450,7 @@ public class FileUtility {
 
 		OutputStreamWriter fw = null;
 		try {
-			fw = new OutputStreamWriter(new FileOutputStream(file, append), "UTF-8");
+			fw = new OutputStreamWriter(new FileOutputStream(file, append), StandardCharsets.UTF_8);
 			Writer bw = new BufferedWriter(fw);
 
 
@@ -480,7 +481,7 @@ public class FileUtility {
 	public static boolean writeToFile(StringBuffer content, File file, boolean append) {
 		OutputStreamWriter fw = null;
 		try {
-			fw = new OutputStreamWriter(new FileOutputStream(file, append), "UTF-8");
+			fw = new OutputStreamWriter(new FileOutputStream(file, append), StandardCharsets.UTF_8);
 			Writer bw = new BufferedWriter(fw);
 
 			bw.write(content.toString());
@@ -546,7 +547,7 @@ public class FileUtility {
 		        int prefixIndex = (path + "/").length();
 		        Path destinationPath = Paths.get(FileUtility.joinPath(destination.getAbsolutePath(), name.substring(prefixIndex)));
 		        if (entry.isDirectory()) {
-		        	LOGGER.info("Creating " + destinationPath.toString());
+		        	LOGGER.info("Creating " + destinationPath);
 		        	destinationPath.toFile().mkdirs();
 		    		continue;
 		    	}
@@ -556,7 +557,7 @@ public class FileUtility {
 				}
 		        Files.copy(inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
 		        if (!postProcessingFunction.apply(destinationPath.toString())) {
-		        	LOGGER.warning("Failed to apply post processing function to path " + destination.toString());
+		        	LOGGER.warning("Failed to apply post processing function to path " + destination);
 		        }
 		    }
 		    jar.close();
@@ -590,7 +591,7 @@ public class FileUtility {
 						}
 						Files.copy(app.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
 						if (!postProcessingFunction.apply(destinationPath.toString())) {
-				        	LOGGER.warning("Failed to apply post processing function to path " + destination.toString());
+				        	LOGGER.warning("Failed to apply post processing function to path " + destination);
 				        }
 					}
 				}

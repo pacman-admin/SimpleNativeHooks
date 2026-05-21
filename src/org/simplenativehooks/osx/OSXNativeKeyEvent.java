@@ -17,9 +17,9 @@ public class OSXNativeKeyEvent extends NativeHookKeyEvent {
 	private static final ReentrantLock flagLock = new ReentrantLock();
 	private static final Set<Integer> keyboardFlags = new HashSet<>();
 
-	private int event;
-	private int code;
-	private long modifier;
+	private final int event;
+	private final int code;
+	private final long modifier;
 	private boolean processed;
 
 	private OSXNativeKeyEvent(int event, int code, long modifier) {

@@ -9,8 +9,8 @@ import org.simplenativehooks.events.NativeKeyEvent.Modifier;
 
 public class X11NativeKeyEvent extends NativeHookKeyEvent {
 
-	private String type;
-	private int key;
+	private final String type;
+	private final int key;
 
 	private X11NativeKeyEvent(String type, int key) {
 		this.type = type;

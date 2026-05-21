@@ -17,7 +17,7 @@ public class X11NativeEventProcessor extends AbstractNativeHookEventProcessor {
 	private static final Pattern MOUSE_MOVE_EVENT = Pattern.compile("^M,T:M,X:((\\-)?[0-9]+),Y:((\\-)?[0-9]+)$");
 	private static final Pattern MOUSE_BUTTON_EVENT = Pattern.compile("^M,T:([A-Z]),B:((\\-)?[0-9]+)$");
 
-	private File executable;
+	private final File executable;
 
 	private X11NativeEventProcessor(File executable) {
 		this.executable = executable;

@@ -22,8 +22,8 @@ public class NativeHookGlobalEventPublisher {
 		this.subscriberss = new LinkedList<>();
 	}
 
-	private List<NativeHookKeyEventSubscriber> subscribers;
-	private List<NativeHookMouseEventSubscriber> subscriberss;
+	private final List<NativeHookKeyEventSubscriber> subscribers;
+	private final List<NativeHookMouseEventSubscriber> subscriberss;
 
 	public static NativeHookGlobalEventPublisher of() {
 		return INSTANCE;

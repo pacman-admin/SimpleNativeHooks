@@ -11,9 +11,9 @@ class LinuxNativeKeyEvent extends NativeHookKeyEvent {
 
 	// See 'struct input_event' in linux/input.h.
 	// Type is always assume to be EV_KEY (0x01).
-	private int type;
-	private int code;
-	private int value;
+	private final int type;
+	private final int code;
+	private final int value;
 
 	private LinuxNativeKeyEvent(int type, int code, int value) {
 		this.type = type;

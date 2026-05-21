@@ -14,8 +14,8 @@ public class GlobalX11EventOchestrator {
 
 	private static final GlobalX11EventOchestrator INSTANCE = new GlobalX11EventOchestrator();
 
-	private X11NativeEventProcessor mouse;
-	private X11NativeEventProcessor keyboard;
+	private final X11NativeEventProcessor mouse;
+	private final X11NativeEventProcessor keyboard;
 
 	private GlobalX11EventOchestrator() {
 		File dir = NativeHookBootstrapResources.getNativeHookDirectory();
