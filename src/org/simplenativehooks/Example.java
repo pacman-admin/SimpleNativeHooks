@@ -64,7 +64,7 @@ public class Example {
 		mouse.startListening();
 
 		/* Wait for testing before shutting down. */
-		Thread.sleep(5000);
+		Thread.sleep(60000);
 
 		/* Clean up */
 		new NativeHookInitializer().stop();
