@@ -15,15 +15,15 @@ public final class NativeKeyHook extends AbstractGlobalKeyListener implements Na
 	}
 
 	@Override
-	public boolean startListening() {
+	public void startListening() {
 		NativeHookGlobalEventPublisher.of().addKeyEventSubscriber(this);
-		return true;
+
 	}
 
 	@Override
-	public boolean stopListening() {
+	public void stopListening() {
 		NativeHookGlobalEventPublisher.of().removeKeyEventSubscriber(this);
-		return true;
+
 	}
 
 	@Override

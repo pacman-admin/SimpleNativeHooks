@@ -27,14 +27,14 @@ public class Example {
             @Override
             public Boolean apply(NativeKeyEvent d) {
                 System.out.println("Key pressed: " + d.getKey());
-                return true;
+
             }
         });
 		key.setKeyReleased(new Function<>() {
             @Override
             public Boolean apply(NativeKeyEvent d) {
                 System.out.println("Key released: " + d.getKey());
-                return true;
+
             }
         });
 		key.startListening();
@@ -44,21 +44,21 @@ public class Example {
             @Override
             public Boolean apply(NativeMouseEvent d) {
                 System.out.println("Mouse pressed button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
-                return true;
+
             }
         });
 		mouse.setMouseReleased(new Function<>() {
             @Override
             public Boolean apply(NativeMouseEvent d) {
                 System.out.println("Mouse released button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
-                return true;
+
             }
         });
 		mouse.setMouseMoved(new Function<>() {
             @Override
             public Boolean apply(NativeMouseEvent d) {
                 System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
-                return true;
+
             }
         });
 		mouse.startListening();

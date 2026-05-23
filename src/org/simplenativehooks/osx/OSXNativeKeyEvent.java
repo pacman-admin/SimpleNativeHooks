@@ -45,6 +45,7 @@ public class OSXNativeKeyEvent extends NativeHookKeyEvent {
 			case 54:
 				c = KeyEvent.VK_META;
 				m = Modifier.KEY_MODIFIER_RIGHT;
+				break;
 			case 55:
 				c = KeyEvent.VK_META;
 				m = Modifier.KEY_MODIFIER_LEFT;
@@ -74,9 +75,6 @@ public class OSXNativeKeyEvent extends NativeHookKeyEvent {
 				c = KeyEvent.VK_ALT;
 				m = Modifier.KEY_MODIFIER_RIGHT;
 				break;
-//			case 63:
-//				c = KeyEvent.VK_FUNCTION;
-//				break;
 			default:
 				throw new InvalidKeyEventException("Unknown flags code '" + code + "' for OSX native key event.");
 			}
