@@ -10,19 +10,19 @@ import org.simplenativehooks.AbstractNativeHookEventProcessor;
 import org.simplenativehooks.NativeHookGlobalEventPublisher;
 import org.simplenativehooks.staticResources.NativeHookBootstrapResources;
 
-public class GlobalWindowsEventOchestrator extends AbstractNativeHookEventProcessor {
+public class GlobalWindowsEventOrchestrator extends AbstractNativeHookEventProcessor {
 
-	private static final Logger LOGGER = Logger.getLogger(GlobalWindowsEventOchestrator.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GlobalWindowsEventOrchestrator.class.getName());
 
-	private static final GlobalWindowsEventOchestrator INSTANCE = new GlobalWindowsEventOchestrator();
+	private static final GlobalWindowsEventOrchestrator INSTANCE = new GlobalWindowsEventOrchestrator();
 	private static final File EXECUTABLE_FILE = NativeHookBootstrapResources.getNativeHookExecutable();
 
 	private static final Pattern KEY_PATTERN = Pattern.compile("^K:([0-9]+?),P:([0-9]+)$");
 	private static final Pattern MOUSE_PATTERN = Pattern.compile("^M:(-?[0-9]+?),(-?[0-9]+?),P:([0-9]+)$");
 
-	private GlobalWindowsEventOchestrator() {}
+	private GlobalWindowsEventOrchestrator() {}
 
-	public static GlobalWindowsEventOchestrator of() {
+	public static GlobalWindowsEventOrchestrator of() {
 		return INSTANCE;
 	}
 

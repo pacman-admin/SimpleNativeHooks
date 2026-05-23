@@ -5,26 +5,26 @@ import java.util.logging.Logger;
 
 import org.simplenativehooks.staticResources.NativeHookBootstrapResources;
 
-public class GlobalX11EventOchestrator {
+public class GlobalX11EventOrchestrator {
 
-	private static final Logger LOGGER = Logger.getLogger(GlobalX11EventOchestrator.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GlobalX11EventOrchestrator.class.getName());
 
 	private static final String MOUSE_EXECUTABLE = "RepeatHookX11Mouse.out";
 	private static final String KEYBOARD_EXECUTABLE = "RepeatHookX11Key.out";
 
-	private static final GlobalX11EventOchestrator INSTANCE = new GlobalX11EventOchestrator();
+	private static final GlobalX11EventOrchestrator INSTANCE = new GlobalX11EventOrchestrator();
 
 	private final X11NativeEventProcessor mouse;
 	private final X11NativeEventProcessor keyboard;
 
-	private GlobalX11EventOchestrator() {
+	private GlobalX11EventOrchestrator() {
 		File dir = NativeHookBootstrapResources.getNativeHookDirectory();
 
 		mouse = X11NativeEventProcessor.of(new File(dir.getAbsolutePath(), MOUSE_EXECUTABLE));
 		keyboard = X11NativeEventProcessor.of(new File(dir.getAbsolutePath(), KEYBOARD_EXECUTABLE));
 	}
 
-	public static GlobalX11EventOchestrator of() {
+	public static GlobalX11EventOrchestrator of() {
 		return INSTANCE;
 	}
 

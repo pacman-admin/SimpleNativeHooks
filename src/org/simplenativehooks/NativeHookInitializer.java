@@ -1,10 +1,10 @@
 package org.simplenativehooks;
 
 import org.simplenativehooks.linux.GlobalLinuxEventOrchestrator;
-import org.simplenativehooks.osx.GlobalOSXEventOchestrator;
+import org.simplenativehooks.osx.GlobalOSXEventOrchestrator;
 import org.simplenativehooks.utilities.OSIdentifier;
-import org.simplenativehooks.windows.GlobalWindowsEventOchestrator;
-import org.simplenativehooks.x11.GlobalX11EventOchestrator;
+import org.simplenativehooks.windows.GlobalWindowsEventOrchestrator;
+import org.simplenativehooks.x11.GlobalX11EventOrchestrator;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,19 +22,19 @@ public class NativeHookInitializer {
 //            LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
         }
         if (OSIdentifier.IS_WINDOWS) {
-            GlobalWindowsEventOchestrator.of().start();
+            GlobalWindowsEventOrchestrator.of().start();
             return;
         }
         if (OSIdentifier.IS_LINUX) {
             if (USE_X11_ON_LINUX) {
-                GlobalX11EventOchestrator.of().start();
+                GlobalX11EventOrchestrator.of().start();
             } else {
                 GlobalLinuxEventOrchestrator.of().start();
             }
             return;
         }
         if (OSIdentifier.IS_OSX) {
-            GlobalOSXEventOchestrator.of().start();
+            GlobalOSXEventOrchestrator.of().start();
             return;
         }
 
@@ -44,7 +44,7 @@ public class NativeHookInitializer {
     public static void stop() {
         if (OSIdentifier.IS_WINDOWS) {
             try {
-                GlobalWindowsEventOchestrator.of().stop();
+                GlobalWindowsEventOrchestrator.of().stop();
             } catch (InterruptedException e) {
                 LOGGER.log(Level.WARNING, "Interrupted while stopping.", e);
             }
@@ -52,7 +52,7 @@ public class NativeHookInitializer {
         }
         if (OSIdentifier.IS_LINUX) {
             if (USE_X11_ON_LINUX) {
-                GlobalX11EventOchestrator.of().stop();
+                GlobalX11EventOrchestrator.of().stop();
             } else {
                 GlobalLinuxEventOrchestrator.of().stop();
             }
@@ -60,7 +60,7 @@ public class NativeHookInitializer {
         }
         if (OSIdentifier.IS_OSX) {
             try {
-                GlobalOSXEventOchestrator.of().stop();
+                GlobalOSXEventOrchestrator.of().stop();
             } catch (InterruptedException e) {
                 LOGGER.log(Level.WARNING, "Interrupted while stopping.", e);
             }

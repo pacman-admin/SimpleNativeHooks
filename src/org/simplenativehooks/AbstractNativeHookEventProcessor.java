@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.ProcessBuilder.Redirect;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +23,8 @@ public abstract class AbstractNativeHookEventProcessor {
 		this.withSudo = true;
 	}
 
-	public void setRunWithoutSudo() {
+	@SuppressWarnings("unused")
+    public void setRunWithoutSudo() {
 		this.withSudo = false;
 	}
 
@@ -67,7 +69,7 @@ public abstract class AbstractNativeHookEventProcessor {
                 try {
                     processStdout(bufferStdout);
                 } catch (Exception e) {
-                    LOGGER.log(Level.WARNING, "Exception encountered reading stdout of command " + runningCommand, e);
+                    LOGGER.log(Level.WARNING, "Exception encountered reading stdout of command " + Arrays.toString(runningCommand), e);
                 }
             });
 			stdoutThread.start();
@@ -75,12 +77,12 @@ public abstract class AbstractNativeHookEventProcessor {
                 try {
                     processStderr(bufferStderr);
                 } catch (Exception e) {
-                    LOGGER.log(Level.WARNING, "Exception encountered reading stderr of command " + runningCommand, e);
+                    LOGGER.log(Level.WARNING, "Exception encountered reading stderr of command " + Arrays.toString(runningCommand), e);
                 }
             });
 			stderrThread.start();
 		} catch (Exception e) {
-			LOGGER.log(Level.WARNING, "Exception encountered while running command " + command, e);
+			LOGGER.log(Level.WARNING, "Exception encountered while running command " + Arrays.toString(command), e);
 			reset();
 		}
 	}

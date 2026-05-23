@@ -12,10 +12,10 @@ import org.simplenativehooks.AbstractNativeHookEventProcessor;
 import org.simplenativehooks.NativeHookGlobalEventPublisher;
 import org.simplenativehooks.staticResources.NativeHookBootstrapResources;
 
-public class GlobalOSXEventOchestrator extends AbstractNativeHookEventProcessor {
-	private static final Logger LOGGER = Logger.getLogger(GlobalOSXEventOchestrator.class.getName());
+public class GlobalOSXEventOrchestrator extends AbstractNativeHookEventProcessor {
+	private static final Logger LOGGER = Logger.getLogger(GlobalOSXEventOrchestrator.class.getName());
 
-	private static final GlobalOSXEventOchestrator INSTANCE = new GlobalOSXEventOchestrator();
+	private static final GlobalOSXEventOrchestrator INSTANCE = new GlobalOSXEventOrchestrator();
 	private static final File EXECUTABLE_FILE = NativeHookBootstrapResources.getNativeHookExecutable();
 
 	private static final Pattern MOUSE_EVENT = Pattern.compile("^E:([0-9]),X:(-?)([0-9]+?),Y:(-?)([0-9]+)$");
@@ -23,9 +23,9 @@ public class GlobalOSXEventOchestrator extends AbstractNativeHookEventProcessor 
 	private static final Pattern KEY_EVENT = Pattern.compile("^E:([0-9]),C:([0-9]+)$");
 	private static final Pattern MODIFIER_EVENT = Pattern.compile("^E:([0-9]),C:([0-9]+?),M:([0-9]+)$");
 
-	private GlobalOSXEventOchestrator() {}
+	private GlobalOSXEventOrchestrator() {}
 
-	public static GlobalOSXEventOchestrator of() {
+	public static GlobalOSXEventOrchestrator of() {
 		return INSTANCE;
 	}
 
