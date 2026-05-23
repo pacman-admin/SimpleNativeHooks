@@ -28,15 +28,15 @@ import java.util.logging.Logger;
  * @author HP Truong
  *
  */
-public class FileUtility {
+public class FileUtil {
 
-	private static final Logger LOGGER = Logger.getLogger(FileUtility.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(FileUtil.class.getName());
 
 	/**
 	 * Private constructor so that no instance is created
 	 */
-	private FileUtility() {
-		throw new IllegalStateException("Cannot create an instance of static class FileUtility");
+	private FileUtil() {
+		throw new IllegalStateException("Cannot create an instance of static class FileUtil");
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class FileUtility {
             br.close();
 
         } catch (IOException e) {
-            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
 		return output;
@@ -111,8 +111,8 @@ public class FileUtility {
 	 * @throws URISyntaxException
 	 */
 	public static void extractFromCurrentJar(String path, File destination, Function<String, Boolean> filteringFunction, Function<String, Boolean> postProcessingFunction) throws IOException, URISyntaxException {
-//		final File jarFile = new File(FileUtility.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-		final File jarFile = new File(FileUtility.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+//		final File jarFile = new File(FileUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+		final File jarFile = new File(FileUtil.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
 
 		if (jarFile.isFile()) {// Run with JAR file
 		    final JarFile jar = new JarFile(jarFile);
@@ -131,7 +131,7 @@ public class FileUtility {
 
 		        InputStream inputStream = jar.getInputStream(entry);
 		        int prefixIndex = (path + "/").length();
-		        Path destinationPath = Paths.get(FileUtility.joinPath(destination.getAbsolutePath(), name.substring(prefixIndex)));
+		        Path destinationPath = Paths.get(FileUtil.joinPath(destination.getAbsolutePath(), name.substring(prefixIndex)));
 		        if (entry.isDirectory()) {
 		        	LOGGER.info("Creating " + destinationPath);
 		        	destinationPath.toFile().mkdirs();
@@ -148,7 +148,7 @@ public class FileUtility {
 		    }
 		    jar.close();
 		} else { // Run with IDE
-			final URL url = FileUtility.class.getResource("/" + path);
+			final URL url = FileUtil.class.getResource("/" + path);
 			if (url == null) {
 				return;
 			}
@@ -171,7 +171,7 @@ public class FileUtility {
 						}
 
 						String relativeDir = rootPath.relativize(dir.toPath()).toString();
-						Path destinationPath = Paths.get(FileUtility.joinPath(destination.getAbsolutePath(), relativeDir, app.getName()));
+						Path destinationPath = Paths.get(FileUtil.joinPath(destination.getAbsolutePath(), relativeDir, app.getName()));
 						if (!destinationPath.getParent().toFile().exists()) {
 							destinationPath.getParent().toFile().mkdirs();
 						}

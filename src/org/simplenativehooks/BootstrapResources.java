@@ -1,6 +1,6 @@
 package org.simplenativehooks;
 
-import org.simplenativehooks.utilities.FileUtility;
+import org.simplenativehooks.utilities.FileUtil;
 import org.simplenativehooks.utilities.Platform;
 
 import java.io.File;
@@ -16,7 +16,7 @@ public class BootstrapResources {
     }
 
     public static File getNativeHookDirectory() {
-        return new File(FileUtility.joinPath("resources", "nativehooks", getOSDir()));
+        return new File(FileUtil.joinPath("resources", "nativehooks", getOSDir()));
     }
 
     public static File getNativeHookExecutable() {
@@ -27,7 +27,7 @@ public class BootstrapResources {
         } else {
             file = "RepeatHook.out";
         }
-        return new File(FileUtility.joinPath(getNativeHookDirectory().getAbsolutePath(), file));
+        return new File(FileUtil.joinPath(getNativeHookDirectory().getAbsolutePath(), file));
     }
 
     private static String getOSDir() {
@@ -50,13 +50,13 @@ public class BootstrapResources {
     }
 
     private void extractResources() throws IOException, URISyntaxException {
-        if (!FileUtility.createDirectory(getExtractingDest().getAbsolutePath())) {
+        if (!FileUtil.createDirectory(getExtractingDest().getAbsolutePath())) {
             LOGGER.warning("Failed to extract " + getName() + " resources");
             return;
         }
 
         final String path = getRelativeSourcePath();
-        FileUtility.extractFromCurrentJar(path, getExtractingDest(), this::correctExtension, this::postProcessing);
+        FileUtil.extractFromCurrentJar(path, getExtractingDest(), this::correctExtension, this::postProcessing);
     }
 
     private boolean postProcessing(String name) {
@@ -99,7 +99,7 @@ public class BootstrapResources {
     }
 
     private File getExtractingDest() {
-        return new File(FileUtility.joinPath("resources", "nativehooks", getOSDir()));
+        return new File(FileUtil.joinPath("resources", "nativehooks", getOSDir()));
     }
 
     private String getName() {

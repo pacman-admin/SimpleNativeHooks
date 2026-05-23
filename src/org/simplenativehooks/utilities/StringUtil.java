@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @author HP
  *
  */
-public class StringUtilities {
+public class StringUtil {
 
 	/**
 	 * Join an iterable of string to one string with joiner. If an element
@@ -56,7 +56,7 @@ public class StringUtilities {
 	/**
 	 * Private constructor so that no instance is created
 	 */
-	private StringUtilities() {
+	private StringUtil() {
 		throw new IllegalStateException("Cannot create an instance of static class Util");
 	}
 }

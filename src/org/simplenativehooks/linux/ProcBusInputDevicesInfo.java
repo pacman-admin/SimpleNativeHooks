@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.simplenativehooks.utilities.FileUtility;
+import org.simplenativehooks.utilities.FileUtil;
 
 public class ProcBusInputDevicesInfo {
 
@@ -134,7 +134,7 @@ public class ProcBusInputDevicesInfo {
 	 */
 	public static List<ProcBusInputDevicesInfo> read() {
 		List<ProcBusInputDevicesInfo> infos = new ArrayList<>();
-		StringBuffer content = FileUtility.readFromFile(INPUT_DEVICE_FILE);
+		StringBuffer content = FileUtil.readFromFile(INPUT_DEVICE_FILE);
 		if (content == null) {
 			return infos;
 		}

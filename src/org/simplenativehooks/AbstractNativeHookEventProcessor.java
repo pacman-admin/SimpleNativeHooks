@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.simplenativehooks.utilities.StringUtilities;
+import org.simplenativehooks.utilities.StringUtil;
 
 public abstract class AbstractNativeHookEventProcessor {
 	private static final Logger LOGGER = Logger.getLogger(AbstractNativeHookEventProcessor.class.getName());
@@ -53,7 +53,7 @@ public abstract class AbstractNativeHookEventProcessor {
 			command = commandWithSudo;
 		}
 		final String[] runningCommand = command;
-		LOGGER.info(getName() + ": running command $" + StringUtilities.join(command, " "));
+		LOGGER.info(getName() + ": running command $" + StringUtil.join(command, " "));
 		try {
 			ProcessBuilder processBuilder = new ProcessBuilder(command);
 			processBuilder.directory(executableDir);
