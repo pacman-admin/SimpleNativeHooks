@@ -7,13 +7,13 @@ import java.util.regex.Pattern;
 
 import org.simplenativehooks.AbstractNativeHookEventProcessor;
 import org.simplenativehooks.NativeHookGlobalEventPublisher;
-import org.simplenativehooks.staticResources.NativeHookBootstrapResources;
+import org.simplenativehooks.staticResources.BootstrapResources;
 
 class LinuxDeviceEventProcessor extends AbstractNativeHookEventProcessor {
 
 	private static final Logger LOGGER = Logger.getLogger(LinuxDeviceEventProcessor.class.getName());
 
-	private static final File EXECUTABLE_FILE = NativeHookBootstrapResources.getNativeHookExecutable();
+	private static final File EXECUTABLE_FILE = BootstrapResources.getNativeHookExecutable();
 	//E.g.: 'Ts:1544327169,Tus:649369,T:1,C:46,V:1'
 	private static final Pattern EVENT_PATTERN = Pattern.compile("^Ts:([0-9]+?),Tus:([0-9]+?),T:([0-9]+?),C:([0-9]+?),V:(-?[0-9]+)$");
 

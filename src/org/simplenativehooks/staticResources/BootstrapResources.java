@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
-public class NativeHookBootstrapResources {
-    private static final Logger LOGGER = Logger.getLogger(NativeHookBootstrapResources.class.getName());
+public class BootstrapResources {
+    private static final Logger LOGGER = Logger.getLogger(BootstrapResources.class.getName());
 
     public static void extract() throws IOException, URISyntaxException {
-        new NativeHookBootstrapResources().extractResources();
+        new BootstrapResources().extractResources();
     }
 
     public static File getNativeHookDirectory() {

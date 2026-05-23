@@ -3,7 +3,7 @@ package org.simplenativehooks.x11;
 import java.io.File;
 import java.util.logging.Logger;
 
-import org.simplenativehooks.staticResources.NativeHookBootstrapResources;
+import org.simplenativehooks.staticResources.BootstrapResources;
 
 public class GlobalX11EventOrchestrator {
 
@@ -18,7 +18,7 @@ public class GlobalX11EventOrchestrator {
 	private final X11NativeEventProcessor keyboard;
 
 	private GlobalX11EventOrchestrator() {
-		File dir = NativeHookBootstrapResources.getNativeHookDirectory();
+		File dir = BootstrapResources.getNativeHookDirectory();
 
 		mouse = X11NativeEventProcessor.of(new File(dir.getAbsolutePath(), MOUSE_EXECUTABLE));
 		keyboard = X11NativeEventProcessor.of(new File(dir.getAbsolutePath(), KEYBOARD_EXECUTABLE));

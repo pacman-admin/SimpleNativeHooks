@@ -10,13 +10,13 @@ import java.util.regex.Pattern;
 
 import org.simplenativehooks.AbstractNativeHookEventProcessor;
 import org.simplenativehooks.NativeHookGlobalEventPublisher;
-import org.simplenativehooks.staticResources.NativeHookBootstrapResources;
+import org.simplenativehooks.staticResources.BootstrapResources;
 
 public class GlobalOSXEventOrchestrator extends AbstractNativeHookEventProcessor {
 	private static final Logger LOGGER = Logger.getLogger(GlobalOSXEventOrchestrator.class.getName());
 
 	private static final GlobalOSXEventOrchestrator INSTANCE = new GlobalOSXEventOrchestrator();
-	private static final File EXECUTABLE_FILE = NativeHookBootstrapResources.getNativeHookExecutable();
+	private static final File EXECUTABLE_FILE = BootstrapResources.getNativeHookExecutable();
 
 	private static final Pattern MOUSE_EVENT = Pattern.compile("^E:([0-9]),X:(-?)([0-9]+?),Y:(-?)([0-9]+)$");
 	private static final Pattern MOUSE_SCROLL_EVENT = Pattern.compile("^E:([0-9])$");
