@@ -9,8 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.simplenativehooks.AbstractNativeHookEventProcessor;
+import org.simplenativehooks.BootstrapResources;
 import org.simplenativehooks.NativeHookGlobalEventPublisher;
-import org.simplenativehooks.staticResources.BootstrapResources;
 
 public class GlobalOSXEventOrchestrator extends AbstractNativeHookEventProcessor {
 	private static final Logger LOGGER = Logger.getLogger(GlobalOSXEventOrchestrator.class.getName());

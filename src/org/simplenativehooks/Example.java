@@ -1,7 +1,5 @@
 package org.simplenativehooks;
 
-import org.simplenativehooks.staticResources.BootstrapResources;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 

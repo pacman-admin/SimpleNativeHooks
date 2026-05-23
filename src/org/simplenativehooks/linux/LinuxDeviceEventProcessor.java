@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import org.simplenativehooks.AbstractNativeHookEventProcessor;
 import org.simplenativehooks.NativeHookGlobalEventPublisher;
-import org.simplenativehooks.staticResources.BootstrapResources;
+import org.simplenativehooks.BootstrapResources;
 
 class LinuxDeviceEventProcessor extends AbstractNativeHookEventProcessor {
 

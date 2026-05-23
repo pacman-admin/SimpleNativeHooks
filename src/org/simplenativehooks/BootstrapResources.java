@@ -1,6 +1,5 @@
-package org.simplenativehooks.staticResources;
+package org.simplenativehooks;
 
-import org.simplenativehooks.NativeHookInitializer;
 import org.simplenativehooks.utilities.FileUtility;
 import org.simplenativehooks.utilities.OSIdentifier;
 
