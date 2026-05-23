@@ -31,7 +31,8 @@ public class GlobalLinuxEventOrchestrator {
 		return INSTANCE;
 	}
 
-	public final void start() {
+	@SuppressWarnings("BusyWait")
+    public final void start() {
 		stop = false;
 		deviceScanner = null;
 

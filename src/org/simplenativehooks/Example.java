@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class Example {
+    @SuppressWarnings("CallToPrintStackTrace")
     public static void main(String[] args) throws InterruptedException {
         /* Extracting resources */
         try {
