@@ -1,6 +1,6 @@
 package org.simplenativehooks;
 
-import org.simplenativehooks.staticResources.BootStrapResources;
+import org.simplenativehooks.staticResources.NativeHookBootstrapResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -10,7 +10,7 @@ public class Example {
     public static void main(String[] args) throws InterruptedException {
         /* Extracting resources */
         try {
-            BootStrapResources.extractResources();
+            NativeHookBootstrapResources.extract();
         } catch (IOException | URISyntaxException e) {
             System.out.println("Cannot extract bootstrap resources.");
             e.printStackTrace();

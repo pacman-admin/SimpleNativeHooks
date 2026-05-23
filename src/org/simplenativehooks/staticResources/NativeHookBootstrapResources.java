@@ -5,9 +5,13 @@ import org.simplenativehooks.utilities.FileUtility;
 import org.simplenativehooks.utilities.OSIdentifier;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class NativeHookBootstrapResources extends AbstractBootstrapResource {
-
+    public static void extract() throws IOException, URISyntaxException {
+        new NativeHookBootstrapResources().extractResources();
+    }
     public static File getNativeHookDirectory() {
         return new File(FileUtility.joinPath("resources", "nativehooks", getOSDir()));
     }
