@@ -7,25 +7,25 @@ import java.util.Set;
 
 public class BootStrapResources {
 
-    private static final Set<AbstractBootstrapResource> BOOTSTRAP_RESOURCES;
+//    private static final Set<AbstractBootstrapResource> BOOTSTRAP_RESOURCES;
 
     private static final NativeHookBootstrapResources nativeHookResources;
 
     static {
 
         /*********************************************************************************/
-        BOOTSTRAP_RESOURCES = new HashSet<>();
+//        BOOTSTRAP_RESOURCES = new HashSet<>();
 
         nativeHookResources = new NativeHookBootstrapResources();
-        BOOTSTRAP_RESOURCES.add(nativeHookResources);
+//        BOOTSTRAP_RESOURCES.add(nativeHookResources);
     }
 
     private BootStrapResources() {
     }
 
     public static void extractResources() throws IOException, URISyntaxException {
-        for (AbstractBootstrapResource resource : BOOTSTRAP_RESOURCES) {
-            resource.extractResources();
-        }
+//        for (AbstractBootstrapResource resource : BOOTSTRAP_RESOURCES) {
+            nativeHookResources.extractResources();
+//        }
     }
 }
