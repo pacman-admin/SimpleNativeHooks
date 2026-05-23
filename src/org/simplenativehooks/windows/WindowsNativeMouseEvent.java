@@ -7,7 +7,7 @@ import org.simplenativehooks.events.NativeHookMouseEvent;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.events.NativeMouseEvent.State;
 
-class WindowsNativeMouseEvent extends NativeHookMouseEvent {
+class WindowsNativeMouseEvent implements NativeHookMouseEvent {
 	private final int x;
 	private final int y;
 

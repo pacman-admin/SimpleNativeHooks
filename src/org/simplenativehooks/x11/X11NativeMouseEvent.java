@@ -8,7 +8,7 @@ import org.simplenativehooks.events.NativeHookMouseEvent;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.events.NativeMouseEvent.State;
 
-public class X11NativeMouseEvent extends NativeHookMouseEvent {
+public class X11NativeMouseEvent implements NativeHookMouseEvent {
 
 	private static int currentX, currentY;
 	private static final ReentrantLock coordinateLock = new ReentrantLock();

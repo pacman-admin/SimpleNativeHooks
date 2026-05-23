@@ -7,7 +7,7 @@ import org.simplenativehooks.events.NativeHookKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent.Modifier;
 
-class LinuxNativeKeyEvent extends NativeHookKeyEvent {
+class LinuxNativeKeyEvent implements NativeHookKeyEvent {
 
 	// See 'struct input_event' in linux/input.h.
 	// Type is always assume to be EV_KEY (0x01).

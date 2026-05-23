@@ -1,5 +1,5 @@
 package org.simplenativehooks.events;
 
-public abstract class NativeHookKeyEvent {
-	public abstract NativeKeyEvent convertEvent() throws InvalidKeyEventException;
+public interface NativeHookKeyEvent {
+	NativeKeyEvent convertEvent() throws InvalidKeyEventException;
 }

@@ -7,7 +7,7 @@ import org.simplenativehooks.events.NativeHookKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent.Modifier;
 
-class WindowsNativeKeyEvent extends NativeHookKeyEvent {
+class WindowsNativeKeyEvent implements NativeHookKeyEvent {
 	private final int code;
 	private final int param;
 

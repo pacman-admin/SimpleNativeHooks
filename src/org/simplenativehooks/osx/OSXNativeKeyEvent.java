@@ -10,7 +10,7 @@ import org.simplenativehooks.events.NativeHookKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent.Modifier;
 
-public class OSXNativeKeyEvent extends NativeHookKeyEvent {
+public class OSXNativeKeyEvent implements NativeHookKeyEvent {
 
 	// The modifier in OSX is complicated enough that it is easier
 	// to just track the flag being enabled here.

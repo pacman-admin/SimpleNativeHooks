@@ -18,7 +18,7 @@ public abstract class AbstractBootstrapResource {
         }
 
         final String path = getRelativeSourcePath();
-        FileUtility.extractFromCurrentJar(path, getExtractingDest(), name -> correctExtension(name), name -> postProcessing(name));
+        FileUtility.extractFromCurrentJar(path, getExtractingDest(), this::correctExtension, this::postProcessing);
     }
 
     protected boolean postProcessing(String name) {

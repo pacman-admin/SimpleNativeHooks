@@ -7,7 +7,7 @@ import org.simplenativehooks.events.NativeHookKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeKeyEvent.Modifier;
 
-public class X11NativeKeyEvent extends NativeHookKeyEvent {
+public class X11NativeKeyEvent implements NativeHookKeyEvent {
 
 	private final String type;
 	private final int key;

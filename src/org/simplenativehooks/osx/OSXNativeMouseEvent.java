@@ -9,7 +9,7 @@ import org.simplenativehooks.events.NativeHookMouseEvent;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.events.NativeMouseEvent.State;
 
-public class OSXNativeMouseEvent extends NativeHookMouseEvent {
+public class OSXNativeMouseEvent implements NativeHookMouseEvent {
 
 	private final int code;
 	private final int x;
