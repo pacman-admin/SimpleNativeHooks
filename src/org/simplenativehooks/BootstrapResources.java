@@ -2,6 +2,7 @@ package org.simplenativehooks;
 
 import org.simplenativehooks.utilities.FileUtility;
 import org.simplenativehooks.utilities.OSIdentifier;
+import org.simplenativehooks.utilities.Platform;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,31 +23,31 @@ public class BootstrapResources {
     public static File getNativeHookExecutable() {
         String file = "";
 
-        if (OSIdentifier.IS_WINDOWS) {
+        if (Platform.isWindows()) {
             file = "RepeatHook.exe";
-        }
-        if (OSIdentifier.IS_LINUX) {
-            file = "RepeatHook.out";
-        }
-        if (OSIdentifier.IS_OSX) {
+        } else {
             file = "RepeatHook.out";
         }
         return new File(FileUtility.joinPath(getNativeHookDirectory().getAbsolutePath(), file));
     }
 
     private static String getOSDir() {
-        if (OSIdentifier.IS_WINDOWS) {
-            return "windows";
-        } else if (OSIdentifier.IS_LINUX) {
-            if (NativeHookInitializer.USE_X11_ON_LINUX) {
-                return "x11";
-            } else {
-                return "linux";
+        switch (Platform.get()) {
+            case WINDOWS -> {
+                return "windows";
             }
-        } else if (OSIdentifier.IS_OSX) {
-            return "osx";
+            case OTHER -> {
+                if (NativeHookInitializer.USE_X11_ON_LINUX) {
+                    return "x11";
+                } else {
+                    return "linux";
+                }
+            }
+            case MAC -> {
+                return "osx";
+            }
         }
-        throw new IllegalStateException("OS is unsupported.");
+        throw new IllegalStateException("Your OS is not supported.");
     }
 
     private void extractResources() throws IOException, URISyntaxException {
@@ -60,7 +61,7 @@ public class BootstrapResources {
     }
 
     private boolean postProcessing(String name) {
-        if (OSIdentifier.IS_LINUX) {
+        if () {
             if (NativeHookInitializer.USE_X11_ON_LINUX) {
                 if (name.endsWith("RepeatHookX11Key.out") || name.endsWith("RepeatHookX11Mouse.out")) {
                     return new File(name).setExecutable(true);
@@ -69,7 +70,7 @@ public class BootstrapResources {
                 return new File(name).setExecutable(true);
             }
         }
-        if (OSIdentifier.IS_OSX && name.endsWith("RepeatHook.out")) {
+        if (Platform.isMac() && name.endsWith("RepeatHook.out")) {
             return new File(name).setExecutable(true);
         }
         return true;

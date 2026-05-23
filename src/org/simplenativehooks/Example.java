@@ -21,11 +21,11 @@ public class Example {
         NativeKeyHook key = NativeKeyHook.of();
         key.setKeyPressed(d -> {
             System.out.println("Key pressed: " + d.getKey());
-            return null;
+            return true;
         });
         key.setKeyReleased(d -> {
             System.out.println("Key released: " + d.getKey());
-            return null;
+            return true;
         });
         key.startListening();
 
