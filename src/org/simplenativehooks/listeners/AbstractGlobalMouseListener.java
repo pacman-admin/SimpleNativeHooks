@@ -1,7 +1,8 @@
 package org.simplenativehooks.listeners;
 
 import org.simplenativehooks.events.NativeMouseEvent;
-import org.simplenativehooks.utilities.Function;
+
+import java.util.function.Function;
 
 public abstract class AbstractGlobalMouseListener implements GlobalListener {
 
@@ -10,9 +11,9 @@ public abstract class AbstractGlobalMouseListener implements GlobalListener {
 	protected Function<NativeMouseEvent, Boolean> mouseMoved;
 
 	protected AbstractGlobalMouseListener() {
-		mousePressed = Function.trueFunction();
-		mouseReleased = Function.trueFunction();
-		mouseMoved = Function.trueFunction();
+		mousePressed = d -> null;
+		mouseReleased = d -> null;
+		mouseMoved = d -> null;
 	}
 
 	public final void setMousePressed(Function<NativeMouseEvent, Boolean> mousePressed) {
