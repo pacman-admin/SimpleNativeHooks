@@ -31,22 +31,15 @@ class LinuxNativeKeyEvent extends NativeHookKeyEvent {
 			throw new InvalidKeyEventException("Unknown key event with type " + type + ".");
 		}
 
-		boolean pressed;
-		switch (value) {
-		case 0:
-			pressed = false;
-			break;
-		case 1:
-			pressed = true;
-			break;
-		case 2: // When is is held down, resulting in a repeat.
-			pressed = true;
-			break;
-		default:
-			throw new InvalidKeyEventException("Unknown value '" + value + "'.");
-		}
+		boolean pressed = switch (value) {
+            case 0 -> false;
+            case 1 -> true;
+            case 2 -> // When is is held down, resulting in a repeat.
+                    true;
+            default -> throw new InvalidKeyEventException("Unknown value '" + value + "'.");
+        };
 
-		return getKeyEvent(pressed);
+        return getKeyEvent(pressed);
 	}
 
 	private NativeKeyEvent getKeyEvent(boolean pressed) throws InvalidKeyEventException {

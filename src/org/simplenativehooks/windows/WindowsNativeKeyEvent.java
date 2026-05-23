@@ -22,21 +22,15 @@ class WindowsNativeKeyEvent extends NativeHookKeyEvent {
 
 	@Override
 	public NativeKeyEvent convertEvent() throws InvalidKeyEventException {
-		boolean pressed = false;
-		switch (param) {
-		case 256: // WM_KEYDOWN
-		case 260: // WM_SYSKEYDOWN, triggered for Alt key.
-			pressed = true;
-			break;
-		case 257: // WM_KEYUP
-		case 261: // WM_SYSKEYUP
-			pressed = false;
-			break;
-		default:
-			throw new InvalidKeyEventException("Unknown param '" + param + "'.");
-		}
+		boolean pressed = switch (param) { // WM_KEYDOWN
+            case 256, 260 -> // WM_SYSKEYDOWN, triggered for Alt key.
+                    true; // WM_KEYUP
+            case 257, 261 -> // WM_SYSKEYUP
+                    false;
+            default -> throw new InvalidKeyEventException("Unknown param '" + param + "'.");
+        };
 
-		return getKeyEvent(pressed);
+        return getKeyEvent(pressed);
 	}
 
 	private NativeKeyEvent getKeyEvent(boolean pressed) throws InvalidKeyEventException {

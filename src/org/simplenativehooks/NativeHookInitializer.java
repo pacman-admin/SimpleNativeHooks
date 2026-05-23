@@ -1,6 +1,6 @@
 package org.simplenativehooks;
 
-import org.simplenativehooks.linux.GlobalLinuxEventOchestrator;
+import org.simplenativehooks.linux.GlobalLinuxEventOrchestrator;
 import org.simplenativehooks.osx.GlobalOSXEventOchestrator;
 import org.simplenativehooks.utilities.OSIdentifier;
 import org.simplenativehooks.windows.GlobalWindowsEventOchestrator;
@@ -12,9 +12,15 @@ import java.util.logging.Logger;
 public class NativeHookInitializer {
 
     public static final String VERSION = "1.0.0";
-    public static final boolean USE_X11_ON_LINUX = true;
+    public static boolean USE_X11_ON_LINUX = true;
     private static final Logger LOGGER = Logger.getLogger(NativeHookInitializer.class.getName());
-    public void start() {
+    public static void start() {
+        String windowEnv = System.getenv("XDG_SESSION_TYPE");
+        if (windowEnv == null) return;
+        if (windowEnv.equalsIgnoreCase("Wayland")) {
+            USE_X11_ON_LINUX = false;
+//            LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
+        }
         if (OSIdentifier.IS_WINDOWS) {
             GlobalWindowsEventOchestrator.of().start();
             return;
@@ -23,7 +29,7 @@ public class NativeHookInitializer {
             if (USE_X11_ON_LINUX) {
                 GlobalX11EventOchestrator.of().start();
             } else {
-                GlobalLinuxEventOchestrator.of().start();
+                GlobalLinuxEventOrchestrator.of().start();
             }
             return;
         }
@@ -35,7 +41,7 @@ public class NativeHookInitializer {
         throw new RuntimeException("OS not supported.");
     }
 
-    public void stop() {
+    public static void stop() {
         if (OSIdentifier.IS_WINDOWS) {
             try {
                 GlobalWindowsEventOchestrator.of().stop();
@@ -48,7 +54,7 @@ public class NativeHookInitializer {
             if (USE_X11_ON_LINUX) {
                 GlobalX11EventOchestrator.of().stop();
             } else {
-                GlobalLinuxEventOchestrator.of().stop();
+                GlobalLinuxEventOrchestrator.of().stop();
             }
             return;
         }

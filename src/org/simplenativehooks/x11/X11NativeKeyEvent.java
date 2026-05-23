@@ -23,22 +23,17 @@ public class X11NativeKeyEvent extends NativeHookKeyEvent {
 
 	@Override
 	public NativeKeyEvent convertEvent() throws InvalidKeyEventException {
-		boolean pressed = false;
-		switch (type) {
-		case "P": // Pressed.
-			pressed = true;
-			break;
-		case "E": // Repeated.
-			pressed = true;
-			break;
-		case "R": // Released.
-			pressed = false;
-			break;
-		default:
-			throw new InvalidKeyEventException("Unknown key event with type '" + type + "'.");
-		}
+		boolean pressed = switch (type) {
+            case "P" -> // Pressed.
+                    true;
+            case "E" -> // Repeated.
+                    true;
+            case "R" -> // Released.
+                    false;
+            default -> throw new InvalidKeyEventException("Unknown key event with type '" + type + "'.");
+        };
 
-		Modifier m = Modifier.KEY_MODIFIER_UNKNOWN;
+        Modifier m = Modifier.KEY_MODIFIER_UNKNOWN;
 		int k = 1;
 		switch (key) {
 		case 1:

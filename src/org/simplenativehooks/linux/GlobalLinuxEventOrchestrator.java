@@ -7,12 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class GlobalLinuxEventOchestrator {
+public class GlobalLinuxEventOrchestrator {
 
-	private static final Logger LOGGER = Logger.getLogger(GlobalLinuxEventOchestrator.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GlobalLinuxEventOrchestrator.class.getName());
 	private static final int WAIT_TIME_MS = 3000;
 
-	private static final GlobalLinuxEventOchestrator INSTANCE = new GlobalLinuxEventOchestrator();
+	private static final GlobalLinuxEventOrchestrator INSTANCE = new GlobalLinuxEventOrchestrator();
 
 	private boolean stop = false;
 	private Thread deviceScanner;
@@ -21,13 +21,13 @@ public class GlobalLinuxEventOchestrator {
 	private final Set<String> allDevices;
 	private Set<String> deviceFiles;
 
-	private GlobalLinuxEventOchestrator() {
+	private GlobalLinuxEventOrchestrator() {
 		deviceManager = new LinuxInputDeviceEventManager();
 		allDevices = new HashSet<>();
 		deviceFiles = new HashSet<>();
 	}
 
-	public static GlobalLinuxEventOchestrator of() {
+	public static GlobalLinuxEventOrchestrator of() {
 		return INSTANCE;
 	}
 
@@ -35,23 +35,20 @@ public class GlobalLinuxEventOchestrator {
 		stop = false;
 		deviceScanner = null;
 
-		deviceScanner = new Thread() {
-			@Override
-			public void run() {
-				while (!stop) {
-					try {
-						scanDevicesAndUpdate();
-					} catch (Exception e) {
-						LOGGER.log(Level.WARNING, "Encountered exception when scanning input devices and update.\n" + e.getMessage(), e);
-					}
-					try {
-						Thread.sleep(WAIT_TIME_MS);
-					} catch (InterruptedException e) {
-						LOGGER.warning("Interrupted while idling between device scans.");
-					}
-				}
-			}
-		};
+		deviceScanner = new Thread(() -> {
+            while (!stop) {
+                try {
+                    scanDevicesAndUpdate();
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Encountered exception when scanning input devices and update.\n" + e.getMessage(), e);
+                }
+                try {
+                    Thread.sleep(WAIT_TIME_MS);
+                } catch (InterruptedException e) {
+                    LOGGER.warning("Interrupted while idling between device scans.");
+                }
+            }
+        });
 		deviceScanner.start();
 	}
 
@@ -67,8 +64,8 @@ public class GlobalLinuxEventOchestrator {
 		allDevices.clear();
 		allDevices.addAll(updatedAllDeviceFiles);
 
-		List<String> mice = devices.stream().filter(ProcBusInputDevicesInfo::isMouse).map(ProcBusInputDevicesInfo::getDeviceFile).collect(Collectors.toList());
-		List<String> keyboards = devices.stream().filter(ProcBusInputDevicesInfo::isKeyboard).map(ProcBusInputDevicesInfo::getDeviceFile).collect(Collectors.toList());
+		List<String> mice = devices.stream().filter(ProcBusInputDevicesInfo::isMouse).map(ProcBusInputDevicesInfo::getDeviceFile).toList();
+		List<String> keyboards = devices.stream().filter(ProcBusInputDevicesInfo::isKeyboard).map(ProcBusInputDevicesInfo::getDeviceFile).toList();
 		Set<String> updatedDeviceFiles = new HashSet<>();
 		updatedDeviceFiles.addAll(mice);
 		updatedDeviceFiles.addAll(keyboards);

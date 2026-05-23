@@ -53,19 +53,13 @@ public class X11NativeMouseEvent extends NativeHookMouseEvent {
 		}
 
 		int b = 0;
-		State s = State.UNKNOWN;
-		switch (event) {
-		case "P":
-			s = State.PRESSED;
-			break;
-		case "R":
-			s = State.RELEASED;
-			break;
-		default:
-			throw new InvalidMouseEventException("Unknown event '" + button + "'.");
-		}
+		State s = switch (event) {
+            case "P" -> State.PRESSED;
+            case "R" -> State.RELEASED;
+            default -> throw new InvalidMouseEventException("Unknown event '" + button + "'.");
+        };
 
-		switch (button) {
+        switch (button) {
 		case 1: // Left.
 			b = KeyEvent.BUTTON1_DOWN_MASK;
 			break;

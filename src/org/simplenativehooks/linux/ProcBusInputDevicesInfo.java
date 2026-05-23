@@ -112,9 +112,9 @@ public class ProcBusInputDevicesInfo {
 		StringBuilder b = new StringBuilder();
 		for (int i = 0; i < hex.length(); i++) {
 			int n = Integer.parseInt(hex.charAt(i) + "", 16);
-		    String bin = Integer.toBinaryString(n);
+		    StringBuilder bin = new StringBuilder(Integer.toBinaryString(n));
 		    while (bin.length() < 4) {
-		    	bin = "0" + bin;
+		    	bin.insert(0, "0");
 		    }
 		    b.append(bin);
 		}

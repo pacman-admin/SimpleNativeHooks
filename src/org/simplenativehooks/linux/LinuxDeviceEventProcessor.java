@@ -92,40 +92,33 @@ class LinuxDeviceEventProcessor extends AbstractNativeHookEventProcessor {
 		LOGGER.info(line);
 	}
 
-	private static class Timestamp {
-		long second;
-		long nanoSecond;
-
-		private Timestamp(long second, long nanoSecond) {
-			this.second = second;
-			this.nanoSecond = nanoSecond;
-		}
+	private record Timestamp(long second, long nanoSecond) {
 
 		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + (int) (nanoSecond ^ (nanoSecond >>> 32));
-			result = prime * result + (int) (second ^ (second >>> 32));
-			return result;
-		}
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + Long.hashCode(nanoSecond);
+				result = prime * result + Long.hashCode(second);
+				return result;
+			}
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj) {
+					return true;
+				}
+				if (obj == null) {
+					return false;
+				}
+				if (getClass() != obj.getClass()) {
+					return false;
+				}
+				Timestamp other = (Timestamp) obj;
+				if (nanoSecond != other.nanoSecond) {
+					return false;
+				}
+				return second == other.second;
 			}
-			if (obj == null) {
-				return false;
-			}
-			if (getClass() != obj.getClass()) {
-				return false;
-			}
-			Timestamp other = (Timestamp) obj;
-			if (nanoSecond != other.nanoSecond) {
-				return false;
-			}
-            return second == other.second;
-        }
-	}
+		}
 }

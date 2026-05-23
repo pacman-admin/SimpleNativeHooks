@@ -36,7 +36,7 @@ public class OSXNativeKeyEvent extends NativeHookKeyEvent {
 	public NativeKeyEvent convertEvent() throws InvalidKeyEventException {
 		checkProcessed();
 
-		int c = KeyEvent.VK_UNDEFINED;
+		int c;
 		Modifier m = Modifier.KEY_MODIFIER_UNKNOWN;
 
 		switch (event) {
@@ -249,7 +249,7 @@ public class OSXNativeKeyEvent extends NativeHookKeyEvent {
 		case 0x32:
 			c = KeyEvent.VK_DEAD_TILDE;
 			break;
-		case 0x33:
+		case 0x33, 0x75:
 			c = KeyEvent.VK_DELETE;
 			break;
 		case 0x35:
@@ -368,10 +368,7 @@ public class OSXNativeKeyEvent extends NativeHookKeyEvent {
 		case 0x74:
 			c = KeyEvent.VK_PAGE_UP;
 			break;
-		case 0x75:
-			c = KeyEvent.VK_DELETE;
-			break;
-		case 0x76:
+            case 0x76:
 			c = KeyEvent.VK_F4;
 			break;
 		case 0x77:
@@ -405,14 +402,13 @@ public class OSXNativeKeyEvent extends NativeHookKeyEvent {
 		return NativeKeyEvent.of(c, m, pressed);
 	}
 
-	private boolean getPressedForFlags(int keyEventCode) throws InvalidKeyEventException {
+	private boolean getPressedForFlags(int keyEventCode) {
 		if (modifier == 256) {
 			clearFlags();
 			return false;
 		}
 
-		boolean x = toggleFlag(keyEventCode);
-		return x;
+        return toggleFlag(keyEventCode);
 	}
 
 	private synchronized void checkProcessed() throws InvalidKeyEventException {

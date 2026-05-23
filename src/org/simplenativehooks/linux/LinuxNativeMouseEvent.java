@@ -32,53 +32,44 @@ class LinuxNativeMouseEvent extends NativeHookMouseEvent {
 
 		switch (type) {
 		case 1: // EV_KEY --> button click.
-			switch (code) {
-			case 0x110: // BTN_MOUSE, also BTN_LEFT
-				button = InputEvent.BUTTON1_DOWN_MASK;
-				break;
-			case 0x111: // BTN_RIGHT
-				button = InputEvent.BUTTON3_DOWN_MASK;
-				break;
-			case 0x112: // BTN_MIDDLE
-				button = InputEvent.BUTTON2_DOWN_MASK;
-				break;
-			default:
-				throw new InvalidMouseEventException("Unknown code '" + code + "' for button click on mouse.");
-			}
+            button = switch (code) {
+                case 0x110 -> // BTN_MOUSE, also BTN_LEFT
+                        InputEvent.BUTTON1_DOWN_MASK;
+                case 0x111 -> // BTN_RIGHT
+                        InputEvent.BUTTON3_DOWN_MASK;
+                case 0x112 -> // BTN_MIDDLE
+                        InputEvent.BUTTON2_DOWN_MASK;
+                default ->
+                        throw new InvalidMouseEventException("Unknown code '" + code + "' for button click on mouse.");
+            };
 
-			switch (value) {
-			case 0: // Released.
-				s = State.RELEASED;
-				break;
-			case 1: // Pressed.
-				s = State.PRESSED;
-				break;
-			default:
-				throw new InvalidMouseEventException("Unknown value '" + value + "' for button click on mouse.");
-			}
+            s = switch (value) {
+                case 0 -> // Released.
+                        State.RELEASED;
+                case 1 -> // Pressed.
+                        State.PRESSED;
+                default ->
+                        throw new InvalidMouseEventException("Unknown value '" + value + "' for button click on mouse.");
+            };
 
 			p = MouseInfo.getPointerInfo().getLocation();
 			return NativeMouseEvent.of(p.x, p.y, s, button);
 		case 2: // EV_REL --> mouse moved or scrolled.
-			switch (code) {
-			case 0x01: // REL_X
-			case 0x02: // REL_Y
-				return currentMovedPosition(button);
-			case 0x06: // REL_HWHEEL
-			case 0x08: // REL_WHEEL
-				throw new InvalidMouseEventException("Not handling scrolling events.");
-			default:
-				throw new InvalidMouseEventException("Unknown code '" + code + "' for type '" + type + "'.");
-			}
+            // REL_WHEEL
+            return switch (code) { // REL_X
+                case 0x01, 0x02 -> // REL_Y
+                        currentMovedPosition(button); // REL_HWHEEL
+                case 0x06, 0x08 -> throw new InvalidMouseEventException("Not handling scrolling events.");
+                default -> throw new InvalidMouseEventException("Unknown code '" + code + "' for type '" + type + "'.");
+            };
 		case 3: // EV_ABS --> mouse moved.
-			switch (code) {
-			case 0x00: // ABS_X
-				return currentMovedPosition(button);
-			case 0x01: // ABS_Y
-				return currentMovedPosition(button);
-			default:
-				throw new InvalidMouseEventException("Unknown code '" + code + "' for type '" + type + "'.");
-			}
+            return switch (code) {
+                case 0x00 -> // ABS_X
+                        currentMovedPosition(button);
+                case 0x01 -> // ABS_Y
+                        currentMovedPosition(button);
+                default -> throw new InvalidMouseEventException("Unknown code '" + code + "' for type '" + type + "'.");
+            };
 		default:
 			throw new InvalidMouseEventException("Unknown type '" + type + ".");
 		}

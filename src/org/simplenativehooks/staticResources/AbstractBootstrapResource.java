@@ -19,12 +19,12 @@ public abstract class AbstractBootstrapResource {
 		}
 
 		final String path = getRelativeSourcePath();
-		FileUtility.extractFromCurrentJar(path, getExtractingDest(), new Function<String, Boolean>() {
-			@Override
-			public Boolean apply(String name) {
-				return correctExtension(name);
-			}
-		}, new Function<>() {
+		FileUtility.extractFromCurrentJar(path, getExtractingDest(), new Function<>() {
+            @Override
+            public Boolean apply(String name) {
+                return correctExtension(name);
+            }
+        }, new Function<>() {
             @Override
             public Boolean apply(String name) {
                 return postProcessing(name);

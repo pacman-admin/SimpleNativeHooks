@@ -25,7 +25,7 @@ public class StringUtilities {
 		while (iter.hasNext()) {
 			String next = iter.next();
 
-			boolean valid = next.replaceAll(" ", "").length() != 0;
+			boolean valid = !next.replace(" ", "").isEmpty();
 
 			if (valid) {
 				builder.append(next);

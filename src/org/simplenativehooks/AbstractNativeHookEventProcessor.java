@@ -63,27 +63,21 @@ public abstract class AbstractNativeHookEventProcessor {
 			BufferedReader bufferStdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			BufferedReader bufferStderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-			stdoutThread = new Thread() {
-				@Override
-				public void run() {
-					try {
-						processStdout(bufferStdout);
-					} catch (Exception e) {
-						LOGGER.log(Level.WARNING, "Exception encountered reading stdout of command " + runningCommand, e);
-					}
-				}
-			};
+			stdoutThread = new Thread(() -> {
+                try {
+                    processStdout(bufferStdout);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Exception encountered reading stdout of command " + runningCommand, e);
+                }
+            });
 			stdoutThread.start();
-			stderrThread = new Thread() {
-				@Override
-				public void run() {
-					try {
-						processStderr(bufferStderr);
-					} catch (Exception e) {
-						LOGGER.log(Level.WARNING, "Exception encountered reading stderr of command " + runningCommand, e);
-					}
-				}
-			};
+			stderrThread = new Thread(() -> {
+                try {
+                    processStderr(bufferStderr);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Exception encountered reading stderr of command " + runningCommand, e);
+                }
+            });
 			stderrThread.start();
 		} catch (Exception e) {
 			LOGGER.log(Level.WARNING, "Exception encountered while running command " + command, e);
@@ -134,7 +128,7 @@ public abstract class AbstractNativeHookEventProcessor {
 		String line;
 		while ((line = reader.readLine()) != null) {
 			String trimmed = line.trim();
-			if (trimmed.length() == 0) {
+			if (trimmed.isEmpty()) {
 				continue;
 			}
 
@@ -150,7 +144,7 @@ public abstract class AbstractNativeHookEventProcessor {
 		String line;
 		while ((line = reader.readLine()) != null) {
 			String trimmed = line.trim();
-			if (trimmed.length() == 0) {
+			if (trimmed.isEmpty()) {
 				continue;
 			}
 

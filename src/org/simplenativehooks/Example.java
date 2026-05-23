@@ -19,54 +19,54 @@ public class Example {
 			System.exit(2);
 		}
 		/* Initializing global hooks */
-		new NativeHookInitializer().start();
+		NativeHookInitializer.start();
 
 		/* Set up callbacks */
 		NativeKeyHook key = NativeKeyHook.of();
-		key.setKeyPressed(new Function<NativeKeyEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeKeyEvent d) {
-				System.out.println("Key pressed: " + d.getKey());
-				return true;
-			}
-		});
-		key.setKeyReleased(new Function<NativeKeyEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeKeyEvent d) {
-				System.out.println("Key released: " + d.getKey());
-				return true;
-			}
-		});
+		key.setKeyPressed(new Function<>() {
+            @Override
+            public Boolean apply(NativeKeyEvent d) {
+                System.out.println("Key pressed: " + d.getKey());
+                return true;
+            }
+        });
+		key.setKeyReleased(new Function<>() {
+            @Override
+            public Boolean apply(NativeKeyEvent d) {
+                System.out.println("Key released: " + d.getKey());
+                return true;
+            }
+        });
 		key.startListening();
 
 		NativeMouseHook mouse = NativeMouseHook.of();
-		mouse.setMousePressed(new Function<NativeMouseEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeMouseEvent d) {
-				System.out.println("Mouse pressed button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
-				return true;
-			}
-		});
-		mouse.setMouseReleased(new Function<NativeMouseEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeMouseEvent d) {
-				System.out.println("Mouse released button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
-				return true;
-			}
-		});
-		mouse.setMouseMoved(new Function<NativeMouseEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeMouseEvent d) {
-				System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
-				return true;
-			}
-		});
+		mouse.setMousePressed(new Function<>() {
+            @Override
+            public Boolean apply(NativeMouseEvent d) {
+                System.out.println("Mouse pressed button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
+                return true;
+            }
+        });
+		mouse.setMouseReleased(new Function<>() {
+            @Override
+            public Boolean apply(NativeMouseEvent d) {
+                System.out.println("Mouse released button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
+                return true;
+            }
+        });
+		mouse.setMouseMoved(new Function<>() {
+            @Override
+            public Boolean apply(NativeMouseEvent d) {
+                System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
+                return true;
+            }
+        });
 		mouse.startListening();
 
 		/* Wait for testing before shutting down. */
 		Thread.sleep(60000);
 
 		/* Clean up */
-		new NativeHookInitializer().stop();
+		NativeHookInitializer.stop();
 	}
 }

@@ -72,37 +72,27 @@ public class FileUtility {
 	 */
 	public static StringBuffer readFromFile(File file) {
 		StringBuffer output = new StringBuffer();
-		FileInputStream fr = null;
 
-		try {
-			fr = new FileInputStream(file);
+        try (FileInputStream fr = new FileInputStream(file)) {
 
-			InputStreamReader char_input = new InputStreamReader(fr, StandardCharsets.UTF_8.newDecoder());
+            InputStreamReader char_input = new InputStreamReader(fr, StandardCharsets.UTF_8.newDecoder());
 
-			BufferedReader br = new BufferedReader(char_input);
+            BufferedReader br = new BufferedReader(char_input);
 
-			while (true) {
-	            String in = br.readLine();
-	            if (in == null) {
-	               break;
-	            }
-	            output.append(in).append("\n");
-	        }
+            while (true) {
+                String in = br.readLine();
+                if (in == null) {
+                    break;
+                }
+                output.append(in).append("\n");
+            }
 
-			br.close();
+            br.close();
 
-		} catch (IOException e) {
-			Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
-			return null;
-		} finally {
-			if (fr != null) {
-				try {
-					fr.close();
-				} catch (IOException e) {
-					Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
-				}
-			}
-		}
+        } catch (IOException e) {
+            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
 		return output;
 	}
 

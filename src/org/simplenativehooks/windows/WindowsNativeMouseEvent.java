@@ -26,45 +26,42 @@ class WindowsNativeMouseEvent extends NativeHookMouseEvent {
 	@Override
 	public NativeMouseEvent convertEvent() throws InvalidMouseEventException {
 		State s;
-		int button;
+		int button = switch (code) {
+            case 512 -> {
+                s = State.MOVED;
+                yield 0;
+            }
+            case 513 -> {
+                s = State.PRESSED;
+                yield InputEvent.BUTTON1_DOWN_MASK;
+            }
+            case 514 -> {
+                s = State.RELEASED;
+                yield InputEvent.BUTTON1_DOWN_MASK;
+            }
+            case 516 -> {
+                s = State.PRESSED;
+                yield InputEvent.BUTTON3_DOWN_MASK;
+            }
+            case 517 -> {
+                s = State.RELEASED;
+                yield InputEvent.BUTTON3_DOWN_MASK;
+            }
+            case 519 -> {
+                s = State.PRESSED;
+                yield InputEvent.BUTTON2_DOWN_MASK;
+            }
+            case 520 -> {
+                s = State.RELEASED;
+                yield InputEvent.BUTTON2_DOWN_MASK;
+            }
+            case 522 -> {
+                s = State.SCROLLED;
+                yield 0;
+            }
+            default -> throw new InvalidMouseEventException("Unknown code " + code + ".");
+        };
 
-		switch (code) {
-		case 512:
-			s = State.MOVED;
-			button = 0;
-			break;
-		case 513:
-			s = State.PRESSED;
-			button = InputEvent.BUTTON1_DOWN_MASK;
-			break;
-		case 514:
-			s = State.RELEASED;
-			button = InputEvent.BUTTON1_DOWN_MASK;
-			break;
-		case 516:
-			s = State.PRESSED;
-			button = InputEvent.BUTTON3_DOWN_MASK;
-			break;
-		case 517:
-			s = State.RELEASED;
-			button = InputEvent.BUTTON3_DOWN_MASK;
-			break;
-		case 519:
-			s = State.PRESSED;
-			button = InputEvent.BUTTON2_DOWN_MASK;
-			break;
-		case 520:
-			s = State.RELEASED;
-			button = InputEvent.BUTTON2_DOWN_MASK;
-			break;
-		case 522:
-			s = State.SCROLLED;
-			button = 0;
-			break;
-		default:
-			throw new InvalidMouseEventException("Unknown code " + code + ".");
-		}
-
-		return NativeMouseEvent.of(x, y, s, button);
+        return NativeMouseEvent.of(x, y, s, button);
 	}
 }
