@@ -38,6 +38,10 @@ public enum Platform {
         return PLATFORM == WINDOWS;
     }
 
+    /**
+     * Determine if the platform this program is running on is some kind of Unix or Unix-like system.
+     * @return If the current OS is neither Windows nor macOS
+     */
     public static boolean isUnix() {
         return PLATFORM == OTHER;
     }

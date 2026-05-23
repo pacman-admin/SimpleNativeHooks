@@ -2,7 +2,7 @@ package org.simplenativehooks;
 
 import org.simplenativehooks.linux.GlobalLinuxEventOrchestrator;
 import org.simplenativehooks.osx.GlobalOSXEventOrchestrator;
-import org.simplenativehooks.utilities.OSIdentifier;
+import org.simplenativehooks.utilities.Platform;
 import org.simplenativehooks.windows.GlobalWindowsEventOrchestrator;
 import org.simplenativehooks.x11.GlobalX11EventOrchestrator;
 
@@ -21,11 +21,11 @@ public class NativeHookInitializer {
             USE_X11_ON_LINUX = false;
 //            LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
         }
-        if (OSIdentifier.IS_WINDOWS) {
+        if (Platform.isWindows()) {
             GlobalWindowsEventOrchestrator.of().start();
             return;
         }
-        if (OSIdentifier.IS_LINUX) {
+        if (Platform.isUnix()) {
             if (USE_X11_ON_LINUX) {
                 GlobalX11EventOrchestrator.of().start();
             } else {
@@ -33,7 +33,7 @@ public class NativeHookInitializer {
             }
             return;
         }
-        if (OSIdentifier.IS_OSX) {
+        if (Platform.isMac()) {
             GlobalOSXEventOrchestrator.of().start();
             return;
         }
@@ -42,7 +42,7 @@ public class NativeHookInitializer {
     }
 
     public static void stop() {
-        if (OSIdentifier.IS_WINDOWS) {
+        if (Platform.isWindows()) {
             try {
                 GlobalWindowsEventOrchestrator.of().stop();
             } catch (InterruptedException e) {
@@ -50,7 +50,7 @@ public class NativeHookInitializer {
             }
             return;
         }
-        if (OSIdentifier.IS_LINUX) {
+        if (Platform.isUnix()) {
             if (USE_X11_ON_LINUX) {
                 GlobalX11EventOrchestrator.of().stop();
             } else {
@@ -58,7 +58,7 @@ public class NativeHookInitializer {
             }
             return;
         }
-        if (OSIdentifier.IS_OSX) {
+        if (Platform.isMac()) {
             try {
                 GlobalOSXEventOrchestrator.of().stop();
             } catch (InterruptedException e) {

@@ -1,7 +1,6 @@
 package org.simplenativehooks;
 
 import org.simplenativehooks.utilities.FileUtility;
-import org.simplenativehooks.utilities.OSIdentifier;
 import org.simplenativehooks.utilities.Platform;
 
 import java.io.File;
@@ -21,7 +20,7 @@ public class BootstrapResources {
     }
 
     public static File getNativeHookExecutable() {
-        String file = "";
+        String file;
 
         if (Platform.isWindows()) {
             file = "RepeatHook.exe";
@@ -61,7 +60,7 @@ public class BootstrapResources {
     }
 
     private boolean postProcessing(String name) {
-        if () {
+        if (Platform.isUnix()) {
             if (NativeHookInitializer.USE_X11_ON_LINUX) {
                 if (name.endsWith("RepeatHookX11Key.out") || name.endsWith("RepeatHookX11Mouse.out")) {
                     return new File(name).setExecutable(true);
@@ -78,17 +77,17 @@ public class BootstrapResources {
 
 
     private boolean correctExtension(String name) {
-        if (OSIdentifier.IS_WINDOWS) {
+        if (Platform.isWindows()) {
             return name.endsWith("RepeatHook.exe");
         }
-        if (OSIdentifier.IS_LINUX) {
+        if (Platform.isUnix()) {
             if (NativeHookInitializer.USE_X11_ON_LINUX) {
                 return name.endsWith("RepeatHookX11Key.out") || name.endsWith("RepeatHookX11Mouse.out");
             } else {
                 return name.endsWith("RepeatHook.out");
             }
         }
-        if (OSIdentifier.IS_OSX) {
+        if (Platform.isMac()) {
             return name.endsWith("RepeatHook.out");
         }
         throw new IllegalStateException("OS is unsupported.");
