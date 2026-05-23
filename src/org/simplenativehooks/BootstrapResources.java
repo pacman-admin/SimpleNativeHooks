@@ -36,7 +36,7 @@ public class BootstrapResources {
                 return "windows";
             }
             case OTHER -> {
-                if (NativeHookInitializer.USE_X11_ON_LINUX) {
+                if (NativeHookInitializer.USE_X11) {
                     return "x11";
                 } else {
                     return "linux";
@@ -61,7 +61,7 @@ public class BootstrapResources {
 
     private boolean postProcessing(String name) {
         if (Platform.isUnix()) {
-            if (NativeHookInitializer.USE_X11_ON_LINUX) {
+            if (NativeHookInitializer.USE_X11) {
                 if (name.endsWith("RepeatHookX11Key.out") || name.endsWith("RepeatHookX11Mouse.out")) {
                     return new File(name).setExecutable(true);
                 }
@@ -81,7 +81,7 @@ public class BootstrapResources {
             return name.endsWith("RepeatHook.exe");
         }
         if (Platform.isUnix()) {
-            if (NativeHookInitializer.USE_X11_ON_LINUX) {
+            if (NativeHookInitializer.USE_X11) {
                 return name.endsWith("RepeatHookX11Key.out") || name.endsWith("RepeatHookX11Mouse.out");
             } else {
                 return name.endsWith("RepeatHook.out");
