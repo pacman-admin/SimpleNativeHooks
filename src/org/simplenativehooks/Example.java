@@ -50,5 +50,7 @@ public class Example {
 
         /* Clean up */
         NativeHookInitializer.stop();
+        mouse.stopListening();
+        key.stopListening();
     }
 }

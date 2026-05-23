@@ -29,7 +29,7 @@ public class OSXNativeMouseEvent implements NativeHookMouseEvent {
 	public NativeMouseEvent convertEvent() throws InvalidMouseEventException {
 		int x = this.x;
 		int y = this.y;
-		State s = State.UNKNOWN;
+		State s;
 		int button = 0;
 
 		switch (code) {

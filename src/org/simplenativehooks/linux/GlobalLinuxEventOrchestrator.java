@@ -14,7 +14,7 @@ public class GlobalLinuxEventOrchestrator {
 
 	private static final GlobalLinuxEventOrchestrator INSTANCE = new GlobalLinuxEventOrchestrator();
 
-	private boolean stop = false;
+	private boolean stop;
 	private Thread deviceScanner;
 	private final LinuxInputDeviceEventManager deviceManager;
 
