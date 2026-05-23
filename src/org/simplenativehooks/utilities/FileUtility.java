@@ -49,22 +49,16 @@ public class FileUtility {
 
 		// if the directory does not exist, create it
 		if (!theDir.exists()) {
-			boolean result = false;
-
-			try {
+            try {
 				theDir.mkdirs();
-				result = true;
-			} catch (SecurityException se) {
+            } catch (SecurityException se) {
 				se.printStackTrace();
 				// handle it
 				return false;
 			}
-
-			return result;
-		} else {
-			return true;
-		}
-	}
+        }
+        return true;
+    }
 
 	/**
 	 * Read a plain text file.
