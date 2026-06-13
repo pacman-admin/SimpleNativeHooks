@@ -3,23 +3,18 @@ package org.simplenativehooks;
 import org.simplenativehooks.utilities.StringUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.Arrays;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class AbstractNativeHookEventProcessor {
     private static final Logger LOGGER = Logger.getLogger(AbstractNativeHookEventProcessor.class.getName());
-    private static final long TIMEOUT_MS = 2000;
+//    private static final long TIMEOUT_MS = 2000;
 
     private boolean withSudo; // Run as root.
     private Process process;
-    private Set<Future<Void>> readers;
+    private Thread stdoutThread, stderrThread, forceDestroyThread;
 
     public void setRunWithSudo() {
         this.withSudo = true;
@@ -41,7 +36,7 @@ public abstract class AbstractNativeHookEventProcessor {
     public abstract void processStderr(String line);
 
     public final void start() {
-        if (process != null) {
+        if (process != null || stdoutThread != null || stderrThread != null) {
             LOGGER.warning("Hook is already running...");
             return;
         }
@@ -59,6 +54,7 @@ public abstract class AbstractNativeHookEventProcessor {
             commandWithSudo[0] = "pkexec";
             command = commandWithSudo;
         }
+        final String[] runningCommand = command;
         LOGGER.info(getName() + ": running command $" + StringUtil.join(command, " "));
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -66,9 +62,15 @@ public abstract class AbstractNativeHookEventProcessor {
             if (withSudo) {
                 processBuilder.redirectInput(Redirect.INHERIT);
             }
-            readers = Set.of(CompletableFuture.runAsync(this::processStderr), CompletableFuture.runAsync(this::processStdout));
+
             process = processBuilder.start();
             process.onExit().thenAccept(p -> System.out.println("Native hook process exited with status code: " + p.exitValue()));
+            process.onExit().thenAccept(p -> reset());
+
+            stdoutThread = new Thread(this::processStdout);
+            stderrThread = new Thread(this::processStderr);
+            stdoutThread.start();
+            stderrThread.start();
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Exception encountered while running command " + Arrays.toString(command), e);
             reset();
@@ -77,9 +79,11 @@ public abstract class AbstractNativeHookEventProcessor {
 
     public final void stop() throws InterruptedException {
         process.destroy();
-        readers.forEach(future -> future.cancel(true));
-        readers.forEach(future -> System.out.println("Reader is cancelled?" + future.isDone()));
-        process.waitFor();
+        LOGGER.info("Native hook process for " + AbstractNativeHookEventProcessor.this.getName() + " destroyed.");
+        process.destroyForcibly();
+        if (process.isAlive()) {
+            System.err.println("Cannot kill task");
+        }
     }
 
     public final boolean isRunning() {
@@ -90,49 +94,49 @@ public abstract class AbstractNativeHookEventProcessor {
     }
 
     private void processStdout() {
-        String line;
-        while (true) {
-            try {
-                if ((line = process.inputReader().readLine()) == null) break;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        try {
+            String line;
+            while ((line = process.inputReader().readLine()) != null) {
+                String trimmed = line.trim();
+                if (trimmed.isBlank()) {
+                    continue;
+                }
+                try {
+                    processStdout(line);
+                } catch (Throwable e) {
+                    LOGGER.log(Level.WARNING, "Exception when processing stdout line for " + getName() + ". " + e.getMessage(), e);
+                }
             }
-            String trimmed = line.trim();
-            if (trimmed.isEmpty()) {
-                continue;
-            }
-            try {
-                processStdout(line);
-            } catch (Exception e) {
-                LOGGER.log(Level.WARNING, "Exception when processing stdout for " + getName() + ". " + e.getMessage(), e);
-            }
+        } catch (Throwable e) {
+            LOGGER.log(Level.WARNING, "Exception when processing stdout for " + getName() + ". " + e.getMessage(), e);
         }
     }
 
     private void processStderr() {
-        String line;
-        while (true) {
-            try {
-                if ((line = process.errorReader().readLine()) == null) break;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            String trimmed = line.trim();
-            if (trimmed.isEmpty()) {
-                continue;
-            }
+        try {
+            String line;
+            while ((line = process.errorReader().readLine()) != null) {
+                String trimmed = line.trim();
+                if (trimmed.isEmpty()) {
+                    continue;
+                }
 
-            try {
-                processStderr(line);
-            } catch (Exception e) {
-                LOGGER.log(Level.WARNING, "Exception when processing stderr for " + getName() + ". " + e.getMessage(), e);
+                try {
+                    processStderr(line);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Exception when processing stderr line for " + getName() + ". " + e.getMessage(), e);
+                }
             }
+        } catch (Throwable e) {
+            LOGGER.log(Level.WARNING, "Exception when processing stderr for " + getName() + ". " + e.getMessage(), e);
         }
+
     }
 
     private void reset() {
         process = null;
-        readers.forEach(future -> future.cancel(true));
-        readers.clear();
+        stdoutThread = null;
+        stderrThread = null;
+        forceDestroyThread = null;
     }
 }

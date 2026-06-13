@@ -19,7 +19,6 @@ import org.simplenativehooks.utilities.Platform;
 
 public enum ControlMode {
     WINDOWS, MAC, X11, UNIX, AUTO;
-    public boolean useMouse = true;
 
     public static ControlMode determine() {
         switch (Platform.get()) {
@@ -34,9 +33,7 @@ public enum ControlMode {
                 if (windowEnv.equalsIgnoreCase("X11")) return X11;
             }
         }
-        ControlMode mouseless = UNIX;
-        mouseless.useMouse = false;
-        return mouseless;
+        return UNIX;
     }
 
     @Override

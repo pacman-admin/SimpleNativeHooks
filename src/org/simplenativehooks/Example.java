@@ -39,23 +39,19 @@ public class Example {
             return true;
         });
         mouse.setMouseMoved(d -> {
-            System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
+//            System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
             return true;
         });
         mouse.startListening();
 
         /* Wait for testing before shutting down. */
-        Thread.sleep(10000);
+        Thread.sleep(60000);
 
         /* Clean up */
-        System.out.println("Stopping event listeners...");
+        NativeHookInitializer.stop();
         mouse.stopListening();
         key.stopListening();
-        System.out.println("Stopping native hook processes...");
-//        Thread cleanupThread = new Thread(NativeHookInitializer::stop);
-//        cleanupThread.start();
-        NativeHookInitializer.stop();
-//        cleanupThread.join();
         System.out.println("Exited");
+        System.exit(0);
     }
 }
