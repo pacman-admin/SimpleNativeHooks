@@ -31,22 +31,7 @@ public class BootstrapResources {
     }
 
     private static String getOSDir() {
-        switch (Platform.get()) {
-            case WINDOWS -> {
-                return "windows";
-            }
-            case OTHER -> {
-                if (NativeHookInitializer.USE_X11) {
-                    return "x11";
-                } else {
-                    return "linux";
-                }
-            }
-            case MAC -> {
-                return "osx";
-            }
-        }
-        throw new IllegalStateException("Your OS is not supported.");
+        return NativeHookInitializer.getMode().toString();
     }
 
     private void extractResources() throws IOException, URISyntaxException {
@@ -61,7 +46,7 @@ public class BootstrapResources {
 
     private boolean postProcessing(String name) {
         if (Platform.isUnix()) {
-            if (NativeHookInitializer.USE_X11) {
+            if (NativeHookInitializer.getMode() == ControlMode.X11) {
                 if (name.endsWith("RepeatHookX11Key.out") || name.endsWith("RepeatHookX11Mouse.out")) {
                     return new File(name).setExecutable(true);
                 }
@@ -81,7 +66,7 @@ public class BootstrapResources {
             return name.endsWith("RepeatHook.exe");
         }
         if (Platform.isUnix()) {
-            if (NativeHookInitializer.USE_X11) {
+            if (NativeHookInitializer.getMode() == ControlMode.X11) {
                 return name.endsWith("RepeatHookX11Key.out") || name.endsWith("RepeatHookX11Mouse.out");
             } else {
                 return name.endsWith("RepeatHook.out");

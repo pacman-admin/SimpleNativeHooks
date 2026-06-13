@@ -35,4 +35,15 @@ public enum ControlMode {
         }
         return UNIX;
     }
+
+    @Override
+    public String toString() {
+        return switch (this) {
+            case WINDOWS -> "windows";
+            case MAC -> "osx";
+            case X11 -> "x11";
+            case UNIX -> "linux";
+            case AUTO -> determine().toString();
+        };
+    }
 }
