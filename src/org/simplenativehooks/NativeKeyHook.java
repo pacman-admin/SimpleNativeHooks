@@ -8,8 +8,6 @@ import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 
 public final class NativeKeyHook extends AbstractGlobalKeyListener implements NativeHookKeyEventSubscriber {
 
-	private static final Logger LOGGER = Logger.getLogger(NativeKeyHook.class.getName());
-
 	private NativeKeyHook(Function<NativeKeyEvent, ?> press, Function<NativeKeyEvent, ?> release) {
 		super(press, release);
 	}
@@ -21,7 +19,6 @@ public final class NativeKeyHook extends AbstractGlobalKeyListener implements Na
 	@Override
 	public void startListening() {
 		NativeHookGlobalEventPublisher.of().addKeyEventSubscriber(this);
-
 	}
 
 	@Override
