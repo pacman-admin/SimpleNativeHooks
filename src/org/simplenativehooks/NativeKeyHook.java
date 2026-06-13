@@ -9,16 +9,13 @@ import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 public final class NativeKeyHook extends AbstractGlobalKeyListener implements NativeHookKeyEventSubscriber {
 
 	private static final Logger LOGGER = Logger.getLogger(NativeKeyHook.class.getName());
-	private NativeKeyHook() {}
 
-	public static NativeKeyHook of() {
-		return new NativeKeyHook();
+	private NativeKeyHook(Function<NativeKeyEvent, ?> press, Function<NativeKeyEvent, ?> release) {
+		super(press, release);
 	}
+
 	public static NativeKeyHook of(Function<NativeKeyEvent, ?> press, Function<NativeKeyEvent, ?> release) {
-		NativeKeyHook hook = new NativeKeyHook();
-		hook.setKeyPressed(press);
-		hook.setKeyReleased(release);
-		return hook;
+        return new NativeKeyHook(press,release);
 	}
 
 	@Override

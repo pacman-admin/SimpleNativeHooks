@@ -3,17 +3,19 @@ package org.simplenativehooks;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class NativeMouseHook extends AbstractGlobalMouseListener implements NativeHookMouseEventSubscriber {
 
     private static final Logger LOGGER = Logger.getLogger(NativeMouseHook.class.getName());
 
-    private NativeMouseHook() {
+    private NativeMouseHook(Function<NativeMouseEvent, ?> press, Function<NativeMouseEvent, ?> release, Function<NativeMouseEvent, ?> move) {
+        super(press, release, move);
     }
 
-    public static NativeMouseHook of() {
-        return new NativeMouseHook();
+    public static NativeMouseHook of(Function<NativeMouseEvent, ?> press, Function<NativeMouseEvent, ?> release, Function<NativeMouseEvent, ?> move) {
+        return new NativeMouseHook(press, release, move);
     }
 
     @Override

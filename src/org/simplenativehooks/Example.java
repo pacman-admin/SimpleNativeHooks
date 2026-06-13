@@ -18,27 +18,22 @@ public class Example {
         NativeHookInitializer.start();
 
         /* Set up callbacks */
-        NativeKeyHook key = NativeKeyHook.of();
-        key.setKeyPressed(d -> {
+        NativeKeyHook key = NativeKeyHook.of(d -> {
             System.out.println("Key pressed: " + d.getKey());
             return true;
-        });
-        key.setKeyReleased(d -> {
+        }, d -> {
             System.out.println("Key released: " + d.getKey());
             return true;
         });
         key.startListening();
 
-        NativeMouseHook mouse = NativeMouseHook.of();
-        mouse.setMousePressed(d -> {
+        NativeMouseHook mouse = NativeMouseHook.of(d -> {
             System.out.println("Mouse pressed button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
             return true;
-        });
-        mouse.setMouseReleased(d -> {
+        }, d -> {
             System.out.println("Mouse released button " + d.getButton() + " at " + d.getX() + ", " + d.getY());
             return true;
-        });
-        mouse.setMouseMoved(d -> {
+        }, d -> {
             System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
             return true;
         });
