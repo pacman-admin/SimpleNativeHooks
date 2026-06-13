@@ -10,11 +10,9 @@ import java.util.logging.Logger;
 
 public abstract class AbstractNativeHookEventProcessor {
     private static final Logger LOGGER = Logger.getLogger(AbstractNativeHookEventProcessor.class.getName());
-//    private static final long TIMEOUT_MS = 2000;
-
     private boolean withSudo; // Run as root.
     private Process process;
-    private Thread stdoutThread, stderrThread, forceDestroyThread;
+    private Thread stdoutThread, stderrThread;
 
     public void setRunWithSudo() {
         this.withSudo = true;
@@ -134,9 +132,11 @@ public abstract class AbstractNativeHookEventProcessor {
     }
 
     private void reset() {
-        process = null;
         stdoutThread = null;
         stderrThread = null;
-        forceDestroyThread = null;
+        if (process != null) {
+            process.destroy();
+            process.destroyForcibly();
+        }
     }
 }

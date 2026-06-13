@@ -15,7 +15,7 @@ public class Example {
             System.exit(2);
         }
         /* Initializing global hooks */
-        NativeHookInitializer.start();
+        NativeHookInitializer.start(ControlMode.X11);
 
         /* Set up callbacks */
         NativeKeyHook key = NativeKeyHook.of();
@@ -39,7 +39,7 @@ public class Example {
             return true;
         });
         mouse.setMouseMoved(d -> {
-//            System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
+            System.out.println("Mouse moved to " + d.getX() + ", " + d.getY());
             return true;
         });
         mouse.startListening();
