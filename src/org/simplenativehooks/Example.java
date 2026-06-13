@@ -45,11 +45,17 @@ public class Example {
         mouse.startListening();
 
         /* Wait for testing before shutting down. */
-        Thread.sleep(60000);
+        Thread.sleep(10000);
 
         /* Clean up */
-        NativeHookInitializer.stop();
+        System.out.println("Stopping event listeners...");
         mouse.stopListening();
         key.stopListening();
+        System.out.println("Stopping native hook processes...");
+//        Thread cleanupThread = new Thread(NativeHookInitializer::stop);
+//        cleanupThread.start();
+        NativeHookInitializer.stop();
+//        cleanupThread.join();
+        System.out.println("Exited");
     }
 }

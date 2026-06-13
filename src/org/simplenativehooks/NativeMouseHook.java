@@ -23,7 +23,6 @@ public class NativeMouseHook extends AbstractGlobalMouseListener implements Nati
 	@Override
 	public void stopListening() {
 		NativeHookGlobalEventPublisher.of().removeMouseEventSubscriber(this);
-
 	}
 
 	@Override
