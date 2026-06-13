@@ -15,7 +15,7 @@ public class Example {
             System.exit(2);
         }
         /* Initializing global hooks */
-        NativeHookInitializer.start(ControlMode.X11);
+        NativeHookInitializer.start();
 
         /* Set up callbacks */
         NativeKeyHook key = NativeKeyHook.of();
@@ -45,7 +45,7 @@ public class Example {
         mouse.startListening();
 
         /* Wait for testing before shutting down. */
-        Thread.sleep(60000);
+        Thread.sleep(30000);
 
         /* Clean up */
         NativeHookInitializer.stop();
