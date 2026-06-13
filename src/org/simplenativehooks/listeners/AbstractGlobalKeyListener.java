@@ -5,19 +5,19 @@ import org.simplenativehooks.events.NativeKeyEvent;
 import java.util.function.Function;
 
 public abstract class AbstractGlobalKeyListener implements GlobalListener {
-	protected Function<NativeKeyEvent, Boolean> keyPressed;
-	protected Function<NativeKeyEvent, Boolean> keyReleased;
-
-	protected AbstractGlobalKeyListener() {
-		keyPressed = d -> null;
-        keyReleased = d -> null;
+	protected Function<NativeKeyEvent, ?> keyPressed;
+	protected Function<NativeKeyEvent, ?> keyReleased;
+	protected AbstractGlobalKeyListener() {}
+	protected AbstractGlobalKeyListener(Function<NativeKeyEvent, ?> press, Function<NativeKeyEvent, ?> release) {
+		keyPressed = press;
+        keyReleased = release;
 	}
 
-	public final void setKeyPressed(Function<NativeKeyEvent, Boolean> keyPressed) {
+	public final void setKeyPressed(Function<NativeKeyEvent, ?> keyPressed) {
 		this.keyPressed = keyPressed;
 	}
 
-	public final void setKeyReleased(Function<NativeKeyEvent, Boolean> keyReleased) {
+	public final void setKeyReleased(Function<NativeKeyEvent, ?> keyReleased) {
 		this.keyReleased = keyReleased;
 	}
 }

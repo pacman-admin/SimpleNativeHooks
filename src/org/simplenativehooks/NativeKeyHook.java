@@ -1,5 +1,6 @@
 package org.simplenativehooks;
 
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 import org.simplenativehooks.events.NativeKeyEvent;
@@ -12,6 +13,12 @@ public final class NativeKeyHook extends AbstractGlobalKeyListener implements Na
 
 	public static NativeKeyHook of() {
 		return new NativeKeyHook();
+	}
+	public static NativeKeyHook of(Function<NativeKeyEvent, ?> press, Function<NativeKeyEvent, ?> release) {
+		NativeKeyHook hook = new NativeKeyHook();
+		hook.setKeyPressed(press);
+		hook.setKeyReleased(release);
+		return hook;
 	}
 
 	@Override
@@ -28,13 +35,9 @@ public final class NativeKeyHook extends AbstractGlobalKeyListener implements Na
 	@Override
 	public void processKeyboardEvent(NativeKeyEvent event) {
 		if (event.isPressed()) {
-			if (!keyPressed.apply(event)) {
-				LOGGER.warning("Failed to process key press event.");
-			}
+			keyPressed.apply(event);
 		} else {
-			if (!keyReleased.apply(event)) {
-				LOGGER.warning("Failed to process key release event.");
-			}
+			keyReleased.apply(event);
 		}
 	}
 

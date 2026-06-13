@@ -1,48 +1,44 @@
 package org.simplenativehooks;
 
-import java.util.logging.Logger;
-
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
+import java.util.logging.Logger;
+
 public class NativeMouseHook extends AbstractGlobalMouseListener implements NativeHookMouseEventSubscriber {
 
-	private static final Logger LOGGER = Logger.getLogger(NativeMouseHook.class.getName());
-	private NativeMouseHook() {}
+    private static final Logger LOGGER = Logger.getLogger(NativeMouseHook.class.getName());
 
-	public static NativeMouseHook of() {
-		return new NativeMouseHook();
-	}
+    private NativeMouseHook() {
+    }
 
-	@Override
-	public void startListening() {
-		NativeHookGlobalEventPublisher.of().addMouseEventSubscriber(this);
+    public static NativeMouseHook of() {
+        return new NativeMouseHook();
+    }
 
-	}
+    @Override
+    public void startListening() {
+        NativeHookGlobalEventPublisher.of().addMouseEventSubscriber(this);
 
-	@Override
-	public void stopListening() {
-		NativeHookGlobalEventPublisher.of().removeMouseEventSubscriber(this);
+    }
 
-	}
+    @Override
+    public void stopListening() {
+        NativeHookGlobalEventPublisher.of().removeMouseEventSubscriber(this);
 
-	@Override
-	public void processMouseEvent(NativeMouseEvent event) {
-		if (event.getState().equals(NativeMouseEvent.State.MOVED)) {
-			if (!mouseMoved.apply(event)) {
-				LOGGER.warning("Failed to process mouse moved event.");
-			}
-		} else if (event.getState().equals(NativeMouseEvent.State.PRESSED)) {
-			if (!mousePressed.apply(event)) {
-				LOGGER.warning("Failed to process mouse press event.");
-			}
-		} else if (event.getState().equals(NativeMouseEvent.State.RELEASED)) {
-			if (!mouseReleased.apply(event)) {
-				LOGGER.warning("Failed to process mouse release event.");
-			}
-		} else { // Drop
-			LOGGER.finer("Silently dropping mouse event with unknown state.");
-		}
-	}
+    }
+
+    @Override
+    public void processMouseEvent(NativeMouseEvent event) {
+        if (event.getState().equals(NativeMouseEvent.State.MOVED)) {
+            mouseMoved.apply(event);
+        } else if (event.getState().equals(NativeMouseEvent.State.PRESSED)) {
+            mousePressed.apply(event);
+        } else if (event.getState().equals(NativeMouseEvent.State.RELEASED)) {
+            mouseReleased.apply(event);
+        } else { // Drop
+            LOGGER.finer("Silently dropping mouse event with unknown state.");
+        }
+    }
 
 }
