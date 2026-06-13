@@ -47,9 +47,10 @@ public abstract class AbstractNativeHookEventProcessor {
 
 		String[] command = getCommand();
 		if (withSudo) {
+			LOGGER.info("The pkexec command must exist on your system to authenticate the program for operation.");
 			String[] commandWithSudo = new String[command.length + 1];
 			System.arraycopy(command, 0, commandWithSudo, 1, command.length);
-			commandWithSudo[0] = "sudo";
+			commandWithSudo[0] = "pkexec";
 			command = commandWithSudo;
 		}
 		final String[] runningCommand = command;
