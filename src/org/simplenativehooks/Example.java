@@ -1,19 +1,8 @@
 package org.simplenativehooks;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 public class Example {
     @SuppressWarnings("CallToPrintStackTrace")
     public static void main(String[] args) throws InterruptedException {
-        /* Extracting resources */
-        try {
-            BootstrapResources.extract();
-        } catch (IOException | URISyntaxException e) {
-            System.out.println("Cannot extract bootstrap resources.");
-            e.printStackTrace();
-            System.exit(2);
-        }
         /* Initializing global hooks */
         NativeHookInitializer.start();
 
