@@ -18,21 +18,20 @@ package org.simplenativehooks;
 import org.simplenativehooks.utilities.Platform;
 
 public enum ControlMode {
-    WINDOWS, MAC, X11, UNIX, AUTO;
+    WINDOWS, MAC, X11, UNIX;
 
-    public static ControlMode determine() {
+    public static ControlMode auto() {
         switch (Platform.get()) {
-            case MAC -> {
-                return MAC;
-            }
             case WINDOWS -> {
                 return WINDOWS;
             }
-            case OTHER -> {
-                String windowEnv = System.getenv("XDG_SESSION_TYPE");
-                if (windowEnv.equalsIgnoreCase("X11")) return X11;
+            case MAC -> {
+                return MAC;
             }
         }
+        String windowEnv = System.getenv("XDG_SESSION_TYPE");
+        if (windowEnv == null) return UNIX;
+        if (windowEnv.equalsIgnoreCase("X11")) return X11;
         return UNIX;
     }
 
@@ -43,7 +42,6 @@ public enum ControlMode {
             case MAC -> "osx";
             case X11 -> "x11";
             case UNIX -> "linux";
-            case AUTO -> determine().toString();
         };
     }
 }

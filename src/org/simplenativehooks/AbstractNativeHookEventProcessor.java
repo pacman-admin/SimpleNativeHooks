@@ -79,9 +79,6 @@ public abstract class AbstractNativeHookEventProcessor {
         process.destroy();
         LOGGER.info("Native hook process for " + AbstractNativeHookEventProcessor.this.getName() + " destroyed.");
         process.destroyForcibly();
-        if (process.isAlive()) {
-            System.err.println("Cannot kill task");
-        }
     }
 
     public final boolean isRunning() {

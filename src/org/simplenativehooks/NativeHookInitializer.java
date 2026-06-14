@@ -12,18 +12,26 @@ public class NativeHookInitializer {
 
     public static final String VERSION = "1.0.0";
     private static final Logger LOGGER = Logger.getLogger(NativeHookInitializer.class.getName());
-    private static ControlMode mode = ControlMode.AUTO;
-    public static ControlMode getMode(){
+    private static ControlMode mode = null;
+
+    public static ControlMode getMode() {
         return mode;
     }
+
     public static void start() {
-        start(mode);
+        start(ControlMode.auto());
     }
 
     public static void start(ControlMode mode) {
+        if (mode == null) mode = ControlMode.auto();
         NativeHookInitializer.mode = mode;
+        try {
+            BootstrapResources.extract();
+        } catch (Throwable e) {
+            System.out.println("Cannot extract bootstrap resources.");
+            System.exit(67);
+        }
         switch (mode) {
-            case AUTO -> start(ControlMode.determine());
             case WINDOWS -> GlobalWindowsEventOrchestrator.of().start();
             case MAC -> GlobalOSXEventOrchestrator.of().start();
             case X11 -> GlobalX11EventOrchestrator.of().start();
@@ -34,7 +42,6 @@ public class NativeHookInitializer {
     public static void stop(ControlMode mode) {
         NativeHookInitializer.mode = mode;
         switch (mode) {
-            case AUTO -> stop(ControlMode.determine());
             case WINDOWS -> {
                 try {
                     GlobalWindowsEventOrchestrator.of().stop();
